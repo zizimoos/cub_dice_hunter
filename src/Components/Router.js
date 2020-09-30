@@ -24,9 +24,12 @@ export default ({ isLoggedIn }) => {
             <Redirect from="*" to="/"></Redirect>
           </>
         ) : (
-          <Route exact path="/">
-            <Auth></Auth>
-          </Route>
+          <>
+            <Route exact path="/">
+              <Auth></Auth>
+            </Route>
+            <Redirect from="*" to="/"></Redirect>
+          </>
         )}
       </Switch>
     </Router>
