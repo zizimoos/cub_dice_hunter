@@ -21,8 +21,9 @@ const List = styled.ul`
 const Item = styled.li`
   width: 100px;
   text-align: center;
-  border-bottom: 3px solid ${(props) => (props.current ? "red" : "transparent")};
-  transition: border-bottom 0.3s ease-in-out;
+  border-bottom: 3px solid
+    ${(props) => (props.current ? "#c05c67" : "transparent")};
+  transition: border-bottom 0.2s ease-in-out;
 `;
 
 const Slink = styled(Link)`
