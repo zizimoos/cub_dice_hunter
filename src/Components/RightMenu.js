@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
+import { authService } from "fbase";
 
 const List = styled.ul`
   display: flex;
@@ -33,17 +34,47 @@ const Slink = styled(Link)`
   height: 50px;
 `;
 
+const SignOut = () => {
+  authService.signOut();
+};
+
 const RightNav = ({ location: { pathname }, open }) => (
   <List open={open}>
-    <Item current={pathname === "/"}>
-      <Slink to="/">HOME</Slink>
-    </Item>
-    <Item current={pathname === "/product"}>
-      <Slink to="/product">PRODUCT</Slink>
-    </Item>
-    <Item current={pathname === "/company"}>
-      <Slink to="/company">COMPANY</Slink>
-    </Item>
+    {authService.currentUser ? (
+      <>
+        <Item current={pathname === "/"}>
+          <Slink to="/">Home</Slink>
+        </Item>
+        <Item current={pathname === "/product"}>
+          <Slink to="/product">Product</Slink>
+        </Item>
+        <Item current={pathname === "/company"}>
+          <Slink to="/company">Company</Slink>
+        </Item>
+        <Item current={pathname === "/detail"}>
+          <Slink to="/detail">Detail</Slink>
+        </Item>
+        <Item onClick={SignOut} current={!authService.currentUser}>
+          <Slink to="/">
+            {authService.currentUser ? "Sign Out" : "Sign In"}
+          </Slink>
+        </Item>
+      </>
+    ) : (
+      <>
+        <Item current={pathname === "/product"}>
+          <Slink to="/product">Product</Slink>
+        </Item>
+        <Item
+          onClick={SignOut}
+          current={pathname === "/" && !authService.currentUser}
+        >
+          <Slink to="/">
+            {authService.currentUser ? "Sign Out" : "Sign In"}
+          </Slink>
+        </Item>
+      </>
+    )}
   </List>
 );
 

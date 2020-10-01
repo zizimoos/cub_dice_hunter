@@ -10,6 +10,7 @@ import Auth from "Routes/Auth";
 import Home from "Routes/Home/index";
 import Product from "Routes/Product";
 import Company from "Routes/Company";
+import Detail from "Routes/Detail";
 
 export default ({ isLoggedIn }) => {
   return (
@@ -21,6 +22,7 @@ export default ({ isLoggedIn }) => {
             <Route exact path="/" component={Home}></Route>
             <Route path="/product" component={Product}></Route>
             <Route path="/company" component={Company}></Route>
+            <Route path="/detail" component={Detail}></Route>
             <Redirect from="*" to="/"></Redirect>
           </>
         ) : (
@@ -28,6 +30,7 @@ export default ({ isLoggedIn }) => {
             <Route exact path="/">
               <Auth></Auth>
             </Route>
+            <Route path="/product" component={Product}></Route>
             <Redirect from="*" to="/"></Redirect>
           </>
         )}
