@@ -11,7 +11,7 @@ import Home from "Routes/Home/index";
 import Product from "Routes/Product";
 import Company from "Routes/Company";
 import Detail from "Routes/Detail";
-
+import AuthAdimn from "Routes/AuthAdmin";
 export default ({ isLoggedIn }) => {
   return (
     <Router>
@@ -23,6 +23,7 @@ export default ({ isLoggedIn }) => {
             <Route path="/product" component={Product}></Route>
             <Route path="/company" component={Company}></Route>
             <Route path="/detail" component={Detail}></Route>
+
             <Redirect from="*" to="/"></Redirect>
           </>
         ) : (
@@ -30,8 +31,9 @@ export default ({ isLoggedIn }) => {
             <Route exact path="/">
               <Auth></Auth>
             </Route>
+            <Route exact path="/azerckidforever" component={AuthAdimn}></Route>
             <Route path="/product" component={Product}></Route>
-            <Redirect from="*" to="/"></Redirect>
+            {/* <Redirect from="*" to="/"></Redirect> */}
           </>
         )}
       </Switch>

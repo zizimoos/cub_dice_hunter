@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { authService } from "fbase";
+import { authService, googleAuth } from "fbase";
 import styled from "styled-components";
 
 const Container = styled.div`
   width: 100vw;
-  height: 85vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,19 +42,27 @@ const Input = styled.input`
     padding-left: 8px;
   }
   background-color: #4a5d70;
-  /* border: 2px solid red; */
-  border-radius: 2px;
+  border-radius: 32x;
 
   margin-bottom: 5px;
-  ::last-child {
-    cursor: pointer;
+`;
+const Button = styled.button`
+  all: unset;
+  width: 300px;
+  padding: 5px;
+  font-size: 16px;
+  background-color: #4a5d70;
+  /* border: 1px solid black; */
+  :not(:last-child) {
+    margin-bottom: 5px;
   }
+  cursor: pointer;
 `;
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [newAccount, setNewAccount] = useState(false);
+  const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
 
   const onChange = (event) => {
@@ -81,6 +89,17 @@ const Auth = () => {
       }
     } catch (error) {
       setError(error.message);
+    }
+  };
+
+  const toggleAccount = () => setNewAccount((prev) => !prev);
+
+  const socialOnclick = (event) => {
+    const {
+      target: { name },
+    } = event;
+    if (name === "google") {
+      authService.signInWithPopup(googleAuth);
     }
   };
 
@@ -116,7 +135,13 @@ const Auth = () => {
             value={newAccount ? "Create Account" : "Log In"}
           ></Input>
         </AuthForm>
-        <p>{error ? `Error : ${error}` : null}</p>
+        <Button onClick={socialOnclick} name="google">
+          Continue with Google
+        </Button>
+        <Button onClick={toggleAccount}>
+          {newAccount ? "login" : "Create Account"}
+        </Button>
+        <p>{error ? `error : ${error}` : null}</p>
       </AuthFormBox>
     </Container>
   );

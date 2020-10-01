@@ -22,7 +22,7 @@ function App() {
     <>
       {init ? <Router isLoggedIn={isLoggedIn}></Router> : "Initializing..."}
       <GlobalStyles></GlobalStyles>
-      <footer>&copy; {new Date().getFullYear()} DiceHunter</footer>
+      {/* <footer>&copy; {new Date().getFullYear()} DiceHunter</footer> */}
     </>
   );
 }
