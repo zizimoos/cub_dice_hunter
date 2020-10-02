@@ -63,7 +63,6 @@ const Auth = () => {
     } = event;
     if (name === "email") {
       setEmail(value);
-      console.log(value);
     } else if (name === "password") {
       setPassword(value);
     }
@@ -78,6 +77,7 @@ const Auth = () => {
       } else {
         // log in
         await authService.signInWithEmailAndPassword(email, password);
+        setNewAccount(false);
       }
     } catch (error) {
       setError(error.message);

@@ -5,8 +5,11 @@ const HomeContainer = () => {
   const [chance, setChance] = useState([]);
   const [percent, setPercent] = useState([]);
   const [sum, setSum] = useState(0);
+  const [overfifteen, setOverfifteen] = useState(0);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState("");
+  const [xData, setXdata] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,54 +22,73 @@ const HomeContainer = () => {
     const {
       target: { value },
     } = event;
-    console.log(value);
     setSearchTerm(value);
   };
   const searchByTerm = () => {
-    console.log(typeof searchTerm);
     const arrayData = searchTerm.split(",").map((d) => parseInt(d));
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const conditionSum = arrayData.reduce(reducer);
+
+    const notANumber = arrayData.includes(NaN);
+    const includeZero = arrayData.includes(0);
+    const biggerThan = arrayData.filter((n) => n > 28);
 
     if (
-      arrayData.length !== 6 ||
-      isNaN(arrayData[0]) ||
-      isNaN(arrayData[1]) ||
-      isNaN(arrayData[2]) ||
-      isNaN(arrayData[3]) ||
-      isNaN(arrayData[4]) ||
-      isNaN(arrayData[5])
+      arrayData.length > 6 ||
+      arrayData.length < 5 ||
+      notANumber ||
+      biggerThan.length !== 0 ||
+      includeZero ||
+      conditionSum > 50
     ) {
-      console.log("6단검색이여야 합니다. 혹은 입력형식이 잘 못 되었습니다.");
-    } else if (arrayData.length === 6) {
+      setError("Sorry, We don't have the data you are searching");
+      setChance([10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]);
+      setSum(10000);
+      setOverfifteen([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      setPercent([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    } else if (JSON.stringify(xData) === JSON.stringify(arrayData)) {
+      return;
+    } else if (
+      // arrayData.length === 6 &&
+      JSON.stringify(xData) !== JSON.stringify(arrayData)
+    ) {
+      setXdata(arrayData);
       numberGen();
       setSearchTerm("");
+      setError("");
     }
-    // 원래는 디비를 검색해서 찾아야 하는데.......
-    // todo 어레이로 바꾸고.... 조건 체크한 다음에....
-    // 조건 어레이 길이가 6개, 모든 요소가 숫자....
   };
 
   const chanceNumbers = [];
   let chanceNumber = 0;
 
   const numberGen = () => {
-    setLoading(true);
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 12; i++) {
       chanceNumber = Math.floor(Math.random() * (Math.random() * 10000));
       chanceNumbers.push(chanceNumber);
     }
 
+    const overfifteen = Math.floor(Math.random() * 100);
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const sum = chanceNumbers.reduce(reducer);
+    const sum = chanceNumbers.reduce(reducer) + overfifteen;
     const cnn = chanceNumbers.map((cn) =>
       parseFloat(((cn / sum) * 100).toPrecision(4))
     );
     setChance(chanceNumbers);
     setSum(sum);
+    setOverfifteen(overfifteen);
     setPercent(cnn);
-    setInterval(setLoading(false), 2000);
+    if (loading === false) {
+      setLoading(true);
+    }
   };
 
-  console.log(chance);
+  if (loading === true) {
+    setTimeout(() => {
+      return setLoading(false);
+    }, 3000 + Math.floor(Math.random() * 1000));
+  }
+
   return (
     <HomePresenter
       chance={chance}
@@ -76,6 +98,8 @@ const HomeContainer = () => {
       searchTerm={searchTerm}
       handleSubmit={handleSubmit}
       updateTerm={updateTerm}
+      error={error}
+      overfifteen={overfifteen}
     ></HomePresenter>
   );
 };

@@ -43,7 +43,7 @@ const RightNav = ({ location: { pathname }, open }) => (
     {authService.currentUser ? (
       <>
         <Item current={pathname === "/"}>
-          <Slink to="/">Home</Slink>
+          <Slink to="/">Search</Slink>
         </Item>
         <Item current={pathname === "/product"}>
           <Slink to="/product">Product</Slink>

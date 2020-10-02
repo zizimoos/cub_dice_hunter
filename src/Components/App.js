@@ -20,7 +20,7 @@ function App() {
 
   return (
     <>
-      {init ? <Router isLoggedIn={isLoggedIn}></Router> : "Initializing..."}
+      {init ? <Router isLoggedIn={isLoggedIn}></Router> : null}
       <GlobalStyles></GlobalStyles>
       {/* <footer>&copy; {new Date().getFullYear()} DiceHunter</footer> */}
     </>

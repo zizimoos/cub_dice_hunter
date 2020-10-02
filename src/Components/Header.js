@@ -15,6 +15,7 @@ const Header = styled.header`
   padding: 0px 10px;
   background-color: rgb(35, 49, 64);
   color: #e8f4ff;
+  z-index: 10;
   /* box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.8); */
 `;
 const Logo = styled.div`
@@ -23,7 +24,7 @@ const Logo = styled.div`
 
 const HeaderC = () => (
   <Header>
-    <Logo>DICE HUNTER</Logo>
+    <Logo>Dice Hunter</Logo>
     <Burger></Burger>
     {/* <RightMenu></RightMenu> */}
   </Header>
