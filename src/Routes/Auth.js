@@ -67,12 +67,19 @@ const Auth = () => {
   const [newAccount, setNewAccount] = useState(false);
   const [error, setError] = useState("");
   const [loggedId, setloggedId] = useState("");
-  // const [loggedIds, setLoggedIds] = useState([]);
+  const [loggedIds, setLoggedIds] = useState([]);
 
   const getLoggedIds = async () => {
     const dbLoggedIds = await dbService.collection("loggedID").get();
-    console.log(dbLoggedIds);
+    dbLoggedIds.forEach((document) => {
+      const loggedIdsObject = {
+        ...document.data(),
+        id: document.id,
+      };
+      setLoggedIds((prev) => [loggedIdsObject, ...prev]);
+    });
   };
+
   useEffect(() => {
     getLoggedIds();
   }, []);
@@ -83,11 +90,14 @@ const Auth = () => {
     } = event;
     if (name === "email") {
       setEmail(value);
+      setloggedId(email);
     } else if (name === "password") {
       setPassword(value);
     }
   };
-  console.log(email);
+
+  console.log(loggedIds);
+
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -98,14 +108,20 @@ const Auth = () => {
         // 로그인 디비에서 지금 로그인 시도 할려는 아이디가 있는지 검색
         // 없다면, 로그인 실행
         // log in
+        console.log(loggedId);
 
+        const check = loggedIds.filter((id) => id.loggedId === email);
+        if (check.length !== 0) {
+          console.log("이미 다른 곳에서 접속중입니다.");
+          return;
+        }
         await authService.signInWithEmailAndPassword(email, password);
         // 로그인 실행 후에 현재 아이디를 로그인 목록 디비에 넣어 놓을 것
         await dbService.collection("loggedID").add({
           loggedId: email,
           createAt: Date.now(),
         });
-        console.log(loggedId);
+
         setloggedId("");
         setNewAccount(false);
       }

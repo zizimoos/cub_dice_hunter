@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { authService } from "fbase";
+
+import { dbService } from "../fbase";
 
 const List = styled.ul`
   display: flex;
@@ -34,50 +36,73 @@ const Slink = styled(Link)`
   height: 50px;
 `;
 
-const SignOut = () => {
-  //DB에서 fileter를 통해서 현재유저를 삭제 할것, 로그아웃 상태를 만들것.
-  //현재 유저가 DB에서 삭제 되었다면 아래의 사인 아웃을 실행할 것
-  authService.signOut();
-};
+const RightNav = ({ location: { pathname }, open }) => {
+  const [loggedIds, setLoggedIds] = useState([]);
 
-const RightNav = ({ location: { pathname }, open }) => (
-  <List open={open}>
-    {authService.currentUser ? (
-      <>
-        <Item current={pathname === "/"}>
-          <Slink to="/">Search</Slink>
-        </Item>
-        <Item current={pathname === "/product"}>
-          <Slink to="/product">Product</Slink>
-        </Item>
-        {/* <Item current={pathname === "/company"}>
+  const getLoggedIds = async () => {
+    const dbLoggedIds = await dbService.collection("loggedID").get();
+    dbLoggedIds.forEach((document) => {
+      setLoggedIds((prev) => [document.data(), ...prev]);
+    });
+  };
+
+  const preSignOut = async () => {
+    try {
+      console.log(authService.currentUser);
+      console.log("SignOut", loggedIds.id);
+      // loggedIds를 업데이트 하면.....
+      if (true) {
+        SignOut();
+      }
+    } catch {}
+  };
+  const SignOut = async () => {
+    authService.signOut();
+  };
+
+  useEffect(() => {
+    getLoggedIds();
+  }, []);
+
+  return (
+    <List open={open}>
+      {authService.currentUser ? (
+        <>
+          <Item current={pathname === "/"}>
+            <Slink to="/">Search</Slink>
+          </Item>
+          <Item current={pathname === "/product"}>
+            <Slink to="/product">Product</Slink>
+          </Item>
+          {/* <Item current={pathname === "/company"}>
           <Slink to="/company">Company</Slink>
         </Item>
         <Item current={pathname === "/detail"}>
           <Slink to="/detail">Detail</Slink>
         </Item> */}
-        <Item onClick={SignOut} current={!authService.currentUser}>
-          <Slink to="/">
-            {authService.currentUser ? "Sign Out" : "Sign In"}
-          </Slink>
-        </Item>
-      </>
-    ) : (
-      <>
-        <Item current={pathname === "/product"}>
-          <Slink to="/product">Product</Slink>
-        </Item>
-        <Item
-          onClick={SignOut}
-          current={pathname === "/" && !authService.currentUser}
-        >
-          <Slink to="/">
-            {authService.currentUser ? "Sign Out" : "Sign In"}
-          </Slink>
-        </Item>
-      </>
-    )}
-  </List>
-);
+          <Item onClick={preSignOut} current={!authService.currentUser}>
+            <Slink to="/">
+              {authService.currentUser ? "Sign Out" : "Sign In"}
+            </Slink>
+          </Item>
+        </>
+      ) : (
+        <>
+          <Item current={pathname === "/product"}>
+            <Slink to="/product">Product</Slink>
+          </Item>
+          <Item
+            onClick={preSignOut}
+            current={pathname === "/" && !authService.currentUser}
+          >
+            <Slink to="/">
+              {authService.currentUser ? "Sign Out" : "Sign In"}
+            </Slink>
+          </Item>
+        </>
+      )}
+    </List>
+  );
+};
 
 export default withRouter(RightNav);
