@@ -74,8 +74,8 @@ const BarChart = ({ chance, sum, overfifteen }) => {
                     paddingTop: "6px",
                     // paddingLeft: "5px",
                     // paddingRight: "5px",
-                    color: "whitesmoke",
-                    backgroundColor: "rgb(35, 49, 64)",
+                    color: "#ec644b",
+                    // backgroundColor: "rgb(35, 49, 64)",
                   }}
                 >
                   {index}
