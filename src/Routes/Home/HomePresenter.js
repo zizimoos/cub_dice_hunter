@@ -47,6 +47,9 @@ const BarContainer = styled.div`
   justify-content: space-between;
   padding: 0px 10px 0px 0px;
   background-color: #4a5d70;
+  :hover {
+    transform: scale(1.01, 1.2);
+  }
 `;
 
 const SearchIcon = styled.div`
@@ -167,6 +170,14 @@ const HomePresenter = ({
               ${sum.toLocaleString()}`
                 : null}
             </span>
+            <div>
+              <span style={{ color: "whitesmoke" }}>
+                client seed : "slkefsd_ejfk2312"
+              </span>{" "}
+              <span style={{ color: "whitesmoke" }}>
+                server seed : "sefrbrwo_dke 3432sus"
+              </span>
+            </div>
           </Box>
         </>
       )}

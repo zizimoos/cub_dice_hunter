@@ -48,12 +48,12 @@ const RightNav = ({ location: { pathname }, open }) => (
         <Item current={pathname === "/product"}>
           <Slink to="/product">Product</Slink>
         </Item>
-        <Item current={pathname === "/company"}>
+        {/* <Item current={pathname === "/company"}>
           <Slink to="/company">Company</Slink>
         </Item>
         <Item current={pathname === "/detail"}>
           <Slink to="/detail">Detail</Slink>
-        </Item>
+        </Item> */}
         <Item onClick={SignOut} current={!authService.currentUser}>
           <Slink to="/">
             {authService.currentUser ? "Sign Out" : "Sign In"}
