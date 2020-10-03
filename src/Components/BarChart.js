@@ -37,18 +37,26 @@ const BarUnitAnimation = (y) => keyframes`
 const BarUnit = styled.span`
   display: inline-block;
   height: 25px;
-
   background-color: #02fe7c;
   margin-right: 10px;
   align-self: flex-start;
   width: ${(props) => props.cnsum * 2000}px;
-
   /* animation: ${BarUnitAnimation} 2s 1s infinite linear alternate; */
   animation: ${(props) =>
       BarUnitAnimation(`${(props) => props.cnsum * 2000}px`)}
     2s 0s linear;
 `;
 
+const EndBarUnit = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 6px;
+  width: 150px;
+  color: rgb(35, 49, 64);
+`;
+const OverTwelve = styled.span`
+  color: whitesmoke;
+`;
 const BarChart = ({ chance, sum, overfifteen }) => {
   return (
     <Container>
@@ -66,7 +74,8 @@ const BarChart = ({ chance, sum, overfifteen }) => {
                     paddingTop: "6px",
                     // paddingLeft: "5px",
                     // paddingRight: "5px",
-                    color: "#ec644b",
+                    color: "whitesmoke",
+                    backgroundColor: "rgb(35, 49, 64)",
                   }}
                 >
                   {index}
@@ -87,29 +96,24 @@ const BarChart = ({ chance, sum, overfifteen }) => {
                   {((cn / sum) * 100).toPrecision(2)} %
                 </span>
               </div>
-              <div key={`divtwo` + index} style={{ display: "flex" }}>
-                <span
-                  key={`spanfour` + index}
-                  style={{
-                    color: "whitesmoke",
-                    paddingTop: "6px",
-                    display: "flex",
-                    justifyContent: "flex-end",
-                  }}
-                >
+              <div
+                key={`divtwo` + index}
+                style={{ display: "flex", justifyContent: "flex-end" }}
+              >
+                <EndBarUnit key={`spanfour` + index}>
                   {cn.toLocaleString()} / {sum.toLocaleString()}
-                </span>
+                </EndBarUnit>
               </div>
             </BarContainer>
           </ResultContainer>
         </div>
       ))}
-      <span style={{ color: "whitesmoke" }}>
+      <OverTwelve>
         {sum
           ? `Over twelve : ${overfifteen.toLocaleString()} /
               ${sum.toLocaleString()}`
           : null}
-      </span>
+      </OverTwelve>
       <div>
         <span style={{ color: "whitesmoke" }}>
           client seed : "slkefsd_ejfk2312"

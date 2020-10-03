@@ -64,7 +64,7 @@ const HomeContainer = () => {
 
   const numberGen = () => {
     for (let i = 0; i < 12; i++) {
-      chanceNumber = Math.floor(Math.random() * (Math.random() * 10000));
+      chanceNumber = Math.floor(Math.random() * (Math.random() * 10000)) + 132;
       chanceNumbers.push(chanceNumber);
     }
 
