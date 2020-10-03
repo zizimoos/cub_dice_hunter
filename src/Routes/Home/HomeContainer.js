@@ -42,10 +42,10 @@ const HomeContainer = () => {
       conditionSum > 50
     ) {
       setError("Sorry, We don't have the data you are searching");
-      setChance([10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]);
-      setSum(10000);
-      setOverfifteen([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      setPercent([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      setChance([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]);
+      setSum(10);
+      setOverfifteen(0);
+      // setPercent([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     } else if (JSON.stringify(xData) === JSON.stringify(arrayData)) {
       return;
     } else if (
@@ -72,7 +72,7 @@ const HomeContainer = () => {
         chanceNumber = Math.floor(Math.random() * (Math.random() * 6000)) + 332;
         chanceNumbers.push(chanceNumber);
       } else if (i > 8) {
-        chanceNumber = Math.floor(Math.random() * (Math.random() * 500)) + 132;
+        chanceNumber = Math.floor(Math.random() * (Math.random() * 1000)) + 132;
         chanceNumbers.push(chanceNumber);
       }
     }
