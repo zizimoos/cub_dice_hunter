@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Loader from "../../Components/Loader";
+import BarChart from "../../Components/BarChart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchDollar } from "@fortawesome/free-solid-svg-icons";
 
@@ -30,34 +31,20 @@ const Input = styled.input`
   background-color: #4a5d70;
 `;
 
-const Box = styled.div`
-  width: 80%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-`;
-const ResultContainer = styled.div`
-  width: 100%;
-  margin-bottom: 20px;
-  /* display: flex; */
-  /* height: 30%; */
-`;
-const BarContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 0px 10px 0px 0px;
-  background-color: #4a5d70;
-  :hover {
-    transform: scale(1.01, 1.2);
-  }
-`;
-
 const SearchIcon = styled.div`
   position: absolute;
   top: 7px;
   right: -25px;
   cursor: pointer;
 `;
+
+const ErrorMessage = styled.p`
+  font-size: 16;
+  color: whitesmoke;
+  margin-top: 140px;
+  margin-bottom: 40px;
+`;
+
 const HomePresenter = ({
   chance,
   percent,
@@ -89,7 +76,7 @@ const HomePresenter = ({
         <Loader></Loader>
       ) : (
         <>
-          <p
+          <ErrorMessage
             style={{
               fontSize: 16,
               color: "whitesmoke",
@@ -98,87 +85,12 @@ const HomePresenter = ({
             }}
           >
             {error ? `${error}` : null}
-          </p>
-          <Box>
-            {chance.map((cn, index) => (
-              <div key={`cn` + index}>
-                <ResultContainer key={index}>
-                  <BarContainer key={`bar` + index}>
-                    <div key={`divone` + index} style={{ display: "flex" }}>
-                      <span
-                        key={`spanone` + index}
-                        style={{
-                          display: "inline-block",
-                          width: "30px",
-                          textAlign: "center",
-                          paddingTop: "6px",
-                          // paddingLeft: "5px",
-                          // paddingRight: "5px",
-                          color: "#ec644b",
-                        }}
-                      >
-                        {index}
-                      </span>
-                      <span
-                        key={`spantwo` + index}
-                        style={{
-                          display: "inline-block",
-                          height: 25,
-                          width: (cn / sum) * 100 * 20,
-                          // backgroundColor: "#ec644b",
-                          backgroundColor: "#02fe7c",
-                          marginRight: 10,
-                          // zIndex: 10,
-                          alignSelf: "start",
-                        }}
-                      ></span>
-                      <span
-                        key={`spanthree` + index}
-                        style={{
-                          display: "inline-block",
-                          width: "100px",
-                          marginRight: "20px",
-                          textAlign: "start",
-                          paddingTop: "6px",
-                          color: "#ec644b",
-                        }}
-                      >
-                        {" "}
-                        {((cn / sum) * 100).toPrecision(2)} %
-                      </span>
-                    </div>
-                    <div key={`divtwo` + index} style={{ display: "flex" }}>
-                      <span
-                        key={`spanfour` + index}
-                        style={{
-                          color: "whitesmoke",
-                          paddingTop: "6px",
-                          display: "flex",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        {cn.toLocaleString()} / {sum.toLocaleString()}
-                      </span>
-                    </div>
-                  </BarContainer>
-                </ResultContainer>
-              </div>
-            ))}
-            <span style={{ color: "whitesmoke" }}>
-              {sum
-                ? `Over twelve : ${overfifteen.toLocaleString()} /
-              ${sum.toLocaleString()}`
-                : null}
-            </span>
-            <div>
-              <span style={{ color: "whitesmoke" }}>
-                client seed : "slkefsd_ejfk2312"
-              </span>{" "}
-              <span style={{ color: "whitesmoke" }}>
-                server seed : "sefrbrwo_dke 3432sus"
-              </span>
-            </div>
-          </Box>
+          </ErrorMessage>
+          <BarChart
+            chance={chance}
+            sum={sum}
+            overfifteen={overfifteen}
+          ></BarChart>
         </>
       )}
     </Container>

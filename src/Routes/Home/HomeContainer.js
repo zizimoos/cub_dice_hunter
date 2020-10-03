@@ -68,7 +68,7 @@ const HomeContainer = () => {
       chanceNumbers.push(chanceNumber);
     }
 
-    const overfifteen = Math.floor(Math.random() * 100);
+    const overfifteen = Math.floor(Math.random() * 100) + 1;
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     const sum = chanceNumbers.reduce(reducer) + overfifteen;
     const cnn = chanceNumbers.map((cn) =>
