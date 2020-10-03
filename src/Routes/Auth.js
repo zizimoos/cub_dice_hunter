@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { authService } from "fbase";
 import styled from "styled-components";
+import { dbService } from "../fbase";
 
 const Container = styled.div`
   width: 100vw;
@@ -65,6 +66,16 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(false);
   const [error, setError] = useState("");
+  const [loggedId, setloggedId] = useState("");
+  // const [loggedIds, setLoggedIds] = useState([]);
+
+  const getLoggedIds = async () => {
+    const dbLoggedIds = await dbService.collection("loggedID").get();
+    console.log(dbLoggedIds);
+  };
+  useEffect(() => {
+    getLoggedIds();
+  }, []);
 
   const onChange = (event) => {
     const {
@@ -76,7 +87,7 @@ const Auth = () => {
       setPassword(value);
     }
   };
-
+  console.log(email);
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -84,8 +95,18 @@ const Auth = () => {
         //create Account
         await authService.createUserWithEmailAndPassword(email, password);
       } else {
+        // 로그인 디비에서 지금 로그인 시도 할려는 아이디가 있는지 검색
+        // 없다면, 로그인 실행
         // log in
+
         await authService.signInWithEmailAndPassword(email, password);
+        // 로그인 실행 후에 현재 아이디를 로그인 목록 디비에 넣어 놓을 것
+        await dbService.collection("loggedID").add({
+          loggedId: email,
+          createAt: Date.now(),
+        });
+        console.log(loggedId);
+        setloggedId("");
         setNewAccount(false);
       }
     } catch (error) {

@@ -35,6 +35,8 @@ const Slink = styled(Link)`
 `;
 
 const SignOut = () => {
+  //DB에서 fileter를 통해서 현재유저를 삭제 할것, 로그아웃 상태를 만들것.
+  //현재 유저가 DB에서 삭제 되었다면 아래의 사인 아웃을 실행할 것
   authService.signOut();
 };
 
