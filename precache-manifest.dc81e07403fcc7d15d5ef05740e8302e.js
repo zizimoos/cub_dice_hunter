@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "82afc2ff22547d732ebd6c27f9e82ce5",
+    "revision": "2bc8a8ec69f51c25d96cdfeea5ad5cdf",
     "url": "/cub_dice_hunter/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/cub_dice_hunter/static/js/2.ed6ef188.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fd4b8bace78df2502936",
-    "url": "/cub_dice_hunter/static/js/main.0a9e6dd2.chunk.js"
+    "revision": "6d428c2b4c54f8b57618",
+    "url": "/cub_dice_hunter/static/js/main.b8d247f3.chunk.js"
   },
   {
     "revision": "72ccac35f78d1330e537",
