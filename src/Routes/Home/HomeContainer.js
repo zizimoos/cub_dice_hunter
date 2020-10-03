@@ -64,8 +64,17 @@ const HomeContainer = () => {
 
   const numberGen = () => {
     for (let i = 0; i < 12; i++) {
-      chanceNumber = Math.floor(Math.random() * (Math.random() * 10000)) + 132;
-      chanceNumbers.push(chanceNumber);
+      if (i < 7) {
+        chanceNumber =
+          Math.floor(Math.random() * (Math.random() * 10000)) + 132;
+        chanceNumbers.push(chanceNumber);
+      } else if (i > 6 && i < 9) {
+        chanceNumber = Math.floor(Math.random() * (Math.random() * 6000)) + 332;
+        chanceNumbers.push(chanceNumber);
+      } else if (i > 8) {
+        chanceNumber = Math.floor(Math.random() * (Math.random() * 500)) + 132;
+        chanceNumbers.push(chanceNumber);
+      }
     }
 
     const overfifteen = Math.floor(Math.random() * 100) + 1;
