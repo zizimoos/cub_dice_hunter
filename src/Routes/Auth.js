@@ -46,9 +46,18 @@ const Input = styled.input`
   border-radius: 2px;
 
   margin-bottom: 5px;
-  ::last-child {
-    cursor: pointer;
-  }
+`;
+const Submit = styled.input`
+  all: unset;
+  width: 300px;
+  height: 23px;
+  padding: 5px;
+  font-size: 16px;
+  text-align: center;
+  color: whitesmoke;
+  background-color: #c05c67;
+  border-radius: 2px;
+  cursor: pointer;
 `;
 
 const Auth = () => {
@@ -105,16 +114,10 @@ const Auth = () => {
             value={password}
             onChange={onChange}
           ></Input>
-          <Input
-            style={{
-              textAlign: "center",
-              backgroundColor: "#c05c67",
-              color: "whitesmoke",
-              fontSize: 14,
-            }}
+          <Submit
             type="submit"
             value={newAccount ? "Create Account" : "Log In"}
-          ></Input>
+          ></Submit>
         </AuthForm>
         <p>{error ? `Error : ${error}` : null}</p>
       </AuthFormBox>
