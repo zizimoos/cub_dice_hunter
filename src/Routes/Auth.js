@@ -70,10 +70,6 @@ const Auth = () => {
   const [error, setError] = useState("");
   const [loggedIds, setLoggedIds] = useState([]);
 
-  useEffect(() => {
-    getLoggedIds();
-  }, []);
-
   const getLoggedIds = async () => {
     const dbLoggedIds = await dbService.collection("loggedID").get();
     dbLoggedIds.forEach((document) => {
@@ -104,16 +100,17 @@ const Auth = () => {
         await authService.createUserWithEmailAndPassword(email, password);
       } else {
         // log in
-        getLoggedIds();
+        await getLoggedIds();
         console.log("체크는 하는 거니?");
         const check = loggedIds.filter((id) => id.loggedId === email);
         if (check.length !== 0) {
           console.log("이미 다른 곳에서 접속중입니다.");
           setError("이미 다른 곳에서 접속중입니다.");
+          window.location.reload();
           return;
         }
         await authService.signInWithEmailAndPassword(email, password);
-        getLoggedIds();
+        await getLoggedIds();
         await dbService
           .collection("loggedID")
           .add({
@@ -135,6 +132,10 @@ const Auth = () => {
       setNewAccount(false);
     }
   };
+
+  useEffect(() => {
+    getLoggedIds();
+  }, [onChange]);
 
   return (
     <Container>
