@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { authService } from "fbase";
 import styled from "styled-components";
 import { dbService } from "../fbase";
+import { withRouter } from "react-router-dom";
 
 const Container = styled.div`
   width: 100vw;
@@ -63,7 +64,7 @@ const Submit = styled.input`
 
 export let dockId = "";
 
-const Auth = () => {
+const Auth = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(false);
@@ -110,6 +111,7 @@ const Auth = () => {
           console.log("이미 다른 곳에서 접속중입니다.");
           setError("이미 다른 곳에서 접속중입니다.");
           setLogin({ loggIn: false });
+          history.push("/");
         } else if (check.length === 0) {
           await authService.signInWithEmailAndPassword(email, password);
           setError("로그인 중입니다.");
@@ -176,4 +178,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export default withRouter(Auth);
