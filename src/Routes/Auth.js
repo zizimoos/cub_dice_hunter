@@ -108,6 +108,7 @@ const Auth = () => {
         const check = loggedIds.filter((id) => id.loggedId === email);
         if (check.length !== 0) {
           console.log("이미 다른 곳에서 접속중입니다.");
+          setError("이미 다른 곳에서 접속중입니다.");
           return;
         }
         await authService.signInWithEmailAndPassword(email, password);
