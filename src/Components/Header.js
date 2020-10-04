@@ -22,10 +22,10 @@ const Logo = styled.div`
   margin-left: 10px;
 `;
 
-const HeaderC = () => (
+const HeaderC = ({ userObj }) => (
   <Header>
     <Logo>Dice Hunter</Logo>
-    <Burger></Burger>
+    <Burger userObj={userObj}></Burger>
     {/* <RightMenu></RightMenu> */}
   </Header>
 );

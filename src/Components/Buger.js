@@ -41,7 +41,7 @@ const StyledBurger = styled.div`
   }
 `;
 
-const Burger = () => {
+const Burger = ({ userObj }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -51,7 +51,7 @@ const Burger = () => {
         <div />
         <div />
       </StyledBurger>
-      <RightNav open={open} />
+      <RightNav open={open} userObj={userObj} />
     </>
   );
 };

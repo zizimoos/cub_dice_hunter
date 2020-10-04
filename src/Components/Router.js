@@ -12,14 +12,17 @@ import Product from "Routes/Product";
 import Company from "Routes/Company";
 import Detail from "Routes/Detail";
 import AuthAdimn from "Routes/AuthAdmin";
-export default ({ isLoggedIn }) => {
+
+export default ({ isLoggedIn, userObj }) => {
   return (
     <Router>
-      <Header></Header>
+      <Header userObj={userObj}></Header>
       <Switch>
         {isLoggedIn ? (
           <>
-            <Route exact path="/" component={Home}></Route>
+            <Route exact path="/">
+              <Home></Home>
+            </Route>
             <Route path="/product" component={Product}></Route>
             <Route path="/company" component={Company}></Route>
             <Route path="/detail" component={Detail}></Route>

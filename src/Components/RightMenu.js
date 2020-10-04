@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { authService } from "fbase";
 
 import { dbService } from "../fbase";
+import { dockId } from "../Routes/Auth";
 
 const List = styled.ul`
   display: flex;
@@ -36,33 +37,20 @@ const Slink = styled(Link)`
   height: 50px;
 `;
 
-const RightNav = ({ location: { pathname }, open }) => {
-  const [loggedIds, setLoggedIds] = useState([]);
-
-  const getLoggedIds = async () => {
-    const dbLoggedIds = await dbService.collection("loggedID").get();
-    dbLoggedIds.forEach((document) => {
-      setLoggedIds((prev) => [document.data(), ...prev]);
-    });
-  };
-
+const RightNav = ({ location: { pathname }, open, userObj }) => {
   const preSignOut = async () => {
     try {
-      console.log(authService.currentUser);
-      console.log("SignOut", loggedIds.id);
-      // loggedIds를 업데이트 하면.....
-      if (true) {
-        SignOut();
-      }
-    } catch {}
+      console.log("Document written with ID in Menu: ", dockId);
+      console.log("authService.currentUser", authService.currentUser.email);
+      await dbService.collection("loggedID").doc(`${dockId}`).delete();
+    } catch {
+    } finally {
+      SignOut();
+    }
   };
   const SignOut = async () => {
     authService.signOut();
   };
-
-  useEffect(() => {
-    getLoggedIds();
-  }, []);
 
   return (
     <List open={open}>
