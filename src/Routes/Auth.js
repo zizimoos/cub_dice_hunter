@@ -104,6 +104,7 @@ const Auth = () => {
         await authService.createUserWithEmailAndPassword(email, password);
       } else {
         // log in
+        getLoggedIds();
         console.log("체크는 하는 거니?");
         const check = loggedIds.filter((id) => id.loggedId === email);
         if (check.length !== 0) {
@@ -139,7 +140,7 @@ const Auth = () => {
     <Container>
       <AuthFormBox>
         <Greeting>Time to DiceHunter</Greeting>
-        <AuthForm onSubmit={onSubmit}>
+        <AuthForm style={{ marginBottom: "20px" }} onSubmit={onSubmit}>
           <Input
             name="email"
             type="email"
@@ -161,9 +162,7 @@ const Auth = () => {
             value={newAccount ? "Create Account" : "Log In"}
           ></Submit>
         </AuthForm>
-        <p style={{ color: "white", marginRight: "20px" }}>
-          {error ? `Error : ${error}` : null}
-        </p>
+        <p style={{ color: "white" }}>{error ? `Error : ${error}` : null}</p>
       </AuthFormBox>
     </Container>
   );
