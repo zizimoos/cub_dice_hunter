@@ -16,10 +16,9 @@ const Container = styled.div`
 `;
 
 const Form = styled.form`
-  margin-bottom: 0px;
+  position: absolute;
   width: 30%;
-  margin-top: 10px;
-  position: relative;
+  top: 15px;
 `;
 
 const Input = styled.input`
@@ -43,14 +42,15 @@ const SearchIcon = styled.div`
 `;
 
 const ErrorMessage = styled.span`
+  position: absolute;
+  top: 80px;
   font-size: 16;
   color: whitesmoke;
-  margin-top: 0px;
-  margin-bottom: 40px;
 `;
 
 const AuthForm = styled.form`
-  margin-top: 10px;
+  position: absolute;
+  top: 65px;
   display: flex;
   flex-direction: row;
   justify-content: center;

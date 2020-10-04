@@ -2,6 +2,8 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const Container = styled.div`
+  position: absolute;
+  top: 150px;
   width: 80%;
   height: 80%;
   display: flex;
