@@ -110,6 +110,7 @@ const Auth = () => {
           return;
         }
         await authService.signInWithEmailAndPassword(email, password);
+        setError("로그인 중입니다.");
         await getLoggedIds();
         await dbService
           .collection("loggedID")
