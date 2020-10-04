@@ -66,7 +66,8 @@ const SInput = styled.input`
 
   background-color: #4a5d70;
   ::placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    /* color: rgba(255, 255, 255, 0.2); */
     padding-left: 8px;
   }
   /* border: 2px solid red; */
