@@ -18,8 +18,8 @@ const Container = styled.div`
 const Form = styled.form`
   margin-bottom: 0px;
   width: 30%;
-  position: absolute;
-  top: 50px;
+  margin-top: 10px;
+  position: relative;
 `;
 
 const Input = styled.input`
@@ -42,16 +42,15 @@ const SearchIcon = styled.div`
   cursor: pointer;
 `;
 
-const ErrorMessage = styled.p`
+const ErrorMessage = styled.span`
   font-size: 16;
   color: whitesmoke;
-  margin-top: 140px;
+  margin-top: 0px;
   margin-bottom: 40px;
 `;
 
 const AuthForm = styled.form`
-  position: absolute;
-  top: 100px;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -166,7 +165,7 @@ const HomePresenter = ({
             style={{
               fontSize: 16,
               color: "whitesmoke",
-              marginTop: "140px",
+              marginTop: "30px",
               marginBottom: "40px",
             }}
           >
