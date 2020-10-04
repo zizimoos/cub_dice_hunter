@@ -110,13 +110,12 @@ const Auth = () => {
           console.log("이미 다른 곳에서 접속중입니다.");
           setError("이미 다른 곳에서 접속중입니다.");
           setLogin({ loggIn: false });
-        } else {
+        } else if (check.length === 0) {
           await authService.signInWithEmailAndPassword(email, password);
           setError("로그인 중입니다.");
           if (!login) {
             setLogin({ loggIn: true });
           }
-
           await getLoggedIds();
           await dbService
             .collection("loggedID")
