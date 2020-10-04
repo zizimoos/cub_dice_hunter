@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const ProductPresenter = () => {
-  return <Container>ProductPresenter</Container>;
+  return <Container>ProductPresenter now</Container>;
 };
 
 export default ProductPresenter;
