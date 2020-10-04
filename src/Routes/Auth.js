@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { authService } from "fbase";
 import styled from "styled-components";
 import { dbService } from "../fbase";
@@ -70,6 +70,10 @@ const Auth = () => {
   const [error, setError] = useState("");
   const [loggedIds, setLoggedIds] = useState([]);
 
+  useEffect(() => {
+    getLoggedIds();
+  }, []);
+
   const getLoggedIds = async () => {
     const dbLoggedIds = await dbService.collection("loggedID").get();
     dbLoggedIds.forEach((document) => {
@@ -100,32 +104,32 @@ const Auth = () => {
         await authService.createUserWithEmailAndPassword(email, password);
       } else {
         // log in
+        console.log("체크는 하는 거니?");
         const check = loggedIds.filter((id) => id.loggedId === email);
         if (check.length !== 0) {
           console.log("이미 다른 곳에서 접속중입니다.");
           return;
         }
         await authService.signInWithEmailAndPassword(email, password);
+        getLoggedIds();
+        await dbService
+          .collection("loggedID")
+          .add({
+            loggedId: email,
+            createAt: Date.now(),
+          })
+          .then(function (docRef) {
+            // console.log("Document written with ID: ", docRef.id);
+            dockId = docRef.id;
+            dbService
+              .collection("loggedID")
+              .doc(docRef.id)
+              .set({ id: docRef.id, loggedId: email });
+          });
       }
     } catch (error) {
       setError(error.message);
     } finally {
-      getLoggedIds();
-      await dbService
-        .collection("loggedID")
-        .add({
-          loggedId: email,
-          createAt: Date.now(),
-        })
-        .then(function (docRef) {
-          // console.log("Document written with ID: ", docRef.id);
-          dockId = docRef.id;
-          dbService
-            .collection("loggedID")
-            .doc(docRef.id)
-            .set({ id: docRef.id, loggedId: email });
-        });
-
       setNewAccount(false);
     }
   };
