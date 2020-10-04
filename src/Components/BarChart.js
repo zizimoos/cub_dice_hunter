@@ -56,6 +56,7 @@ const EndBarUnit = styled.div`
 `;
 const OverTwelve = styled.span`
   color: whitesmoke;
+  font-size: 16px;
 `;
 const BarChart = ({ chance, sum, overfifteen }) => {
   return (

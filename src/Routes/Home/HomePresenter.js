@@ -30,6 +30,9 @@ const Input = styled.input`
   font-size: 16px;
   border-radius: 3px;
   background-color: #4a5d70;
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+  }
 `;
 
 const SearchIcon = styled.div`
@@ -56,33 +59,34 @@ const AuthForm = styled.form`
 `;
 const SInput = styled.input`
   all: unset;
-  width: 150px;
-  height: 16px;
-  padding: 5px;
-  font-size: 16px;
-  ::placeholder {
-    color: rgba(255, 255, 255, 0.2);
-    font-size: 14px;
-    padding-left: 8px;
-  }
-  background-color: #4a5d70;
-  /* border: 2px solid red; */
-  border-radius: 2px;
-  margin-right: 5px;
-  /* margin-bottom: 5px; */
-`;
-const SSubmit = styled.input`
-  all: unset;
-  width: 100px;
+  width: 130px;
   height: 16px;
   padding: 5px;
   font-size: 14px;
-  text-align: center;
-  color: whitesmoke;
-  background-color: #c05c67;
+
+  background-color: #4a5d70;
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+    padding-left: 8px;
+  }
+  /* border: 2px solid red; */
   border-radius: 2px;
-  cursor: pointer;
+  margin-right: 5px;
+  margin-left: 5px;
+  /* margin-bottom: 5px; */
 `;
+// const SSubmit = styled.input`
+//   all: unset;
+//   width: 50px;
+//   height: 16px;
+//   padding: 5px;
+//   font-size: 14px;
+//   text-align: center;
+//   color: "#4a5d70";
+//   background-color: #c05c67;
+//   border-radius: 2px;
+//   cursor: pointer;
+// `;
 
 const HomePresenter = ({
   chance,
@@ -94,6 +98,11 @@ const HomePresenter = ({
   handleSubmit,
   searchTerm,
   updateTerm,
+  onSubmit,
+  onChangeServer,
+  onChangeClient,
+  serverSeed,
+  clientSeed,
 }) => {
   return (
     <Container>
@@ -112,24 +121,40 @@ const HomePresenter = ({
             />
           </SearchIcon>
         </Form>
-        <AuthForm style={{ marginBottom: "20px" }}>
+        <AuthForm onSubmit={onSubmit}>
+          <span
+            style={{
+              color: "#4a5d70",
+            }}
+          >
+            {" "}
+            C :{" "}
+          </span>
           <SInput
             name="clientSeed"
             type="text"
             placeholder="Client Seed "
             required
-            // value={clientSeed}
-            // onChange={onChange}
+            value={clientSeed}
+            onChange={onChangeClient}
           ></SInput>
+          <span
+            style={{
+              color: "#4a5d70",
+            }}
+          >
+            {" "}
+            S :{" "}
+          </span>
           <SInput
             name="erverSeed"
             type="text"
             placeholder="Server Seed"
             required
-            // value={serverSeed}
-            // onChange={onChange}
+            value={serverSeed}
+            onChange={onChangeServer}
           ></SInput>
-          <SSubmit type="submit" value="Save"></SSubmit>
+          {/* <SSubmit type="submit" value="Save"></SSubmit> */}
         </AuthForm>
       </>
       {loading ? (

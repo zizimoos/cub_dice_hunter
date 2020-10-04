@@ -10,6 +10,34 @@ const HomeContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
   const [xData, setXdata] = useState([]);
+  const [serverSeed, setServerSeed] = useState("");
+  const [clientSeed, setClientSeed] = useState("");
+
+  const onSubmit = (event) => {
+    // event.preventDefault();
+    // if (serverSeed !== "") {
+    //   setServerSeed(serverSeed);
+    // }
+    // if (clientSeed !== "") {
+    //   setClientSeed(clientSeed);
+    // }
+  };
+  const onChangeClient = (event) => {
+    event.preventDefault();
+    const {
+      target: { value },
+    } = event;
+    console.log(value);
+    setClientSeed(value);
+  };
+  const onChangeServer = (event) => {
+    event.preventDefault();
+    const {
+      target: { value },
+    } = event;
+    console.log(value);
+    setServerSeed(value);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,6 +52,7 @@ const HomeContainer = () => {
     } = event;
     setSearchTerm(value);
   };
+
   const searchByTerm = () => {
     const arrayData = searchTerm.split(",").map((d) => parseInt(d));
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -39,7 +68,9 @@ const HomeContainer = () => {
       notANumber ||
       biggerThan.length !== 0 ||
       includeZero ||
-      conditionSum > 50
+      conditionSum > 50 ||
+      serverSeed === "" ||
+      clientSeed === ""
     ) {
       setError("Sorry, We don't have the data you are searching");
       setChance([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]);
@@ -109,6 +140,11 @@ const HomeContainer = () => {
       updateTerm={updateTerm}
       error={error}
       overfifteen={overfifteen}
+      onSubmit={onSubmit}
+      onChangeClient={onChangeClient}
+      onChangeServer={onChangeServer}
+      serverSeed={serverSeed}
+      clientSeed={clientSeed}
     ></HomePresenter>
   );
 };
