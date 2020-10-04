@@ -105,13 +105,12 @@ const Auth = ({ history }) => {
       } else {
         // log in
         await getLoggedIds();
-        console.log("체크는 하는 거니?");
         const check = loggedIds.filter((id) => id.loggedId === email);
         if (check.length !== 0) {
           console.log("이미 다른 곳에서 접속중입니다.");
           setError("이미 다른 곳에서 접속중입니다.");
           setLogin({ loggIn: false });
-          history.push("/production");
+          setTimeout(() => history.push("/production"), 1000);
         } else if (check.length === 0) {
           await authService.signInWithEmailAndPassword(email, password);
           setError("로그인 중입니다.");
