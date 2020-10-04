@@ -114,14 +114,6 @@ const BarChart = ({ chance, sum, overfifteen }) => {
               ${sum.toLocaleString()}`
           : null}
       </OverTwelve>
-      <div>
-        <span style={{ color: "whitesmoke" }}>
-          client seed : "slkefsd_ejfk2312"
-        </span>{" "}
-        <span style={{ color: "whitesmoke" }}>
-          server seed : "sefrbrwo_dke 3432sus"
-        </span>
-      </div>
     </Container>
   );
 };

@@ -14,6 +14,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const Form = styled.form`
   margin-bottom: 0px;
   width: 30%;
@@ -45,6 +46,44 @@ const ErrorMessage = styled.p`
   margin-bottom: 40px;
 `;
 
+const AuthForm = styled.form`
+  position: absolute;
+  top: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+const SInput = styled.input`
+  all: unset;
+  width: 150px;
+  height: 16px;
+  padding: 5px;
+  font-size: 16px;
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 14px;
+    padding-left: 8px;
+  }
+  background-color: #4a5d70;
+  /* border: 2px solid red; */
+  border-radius: 2px;
+  margin-right: 5px;
+  /* margin-bottom: 5px; */
+`;
+const SSubmit = styled.input`
+  all: unset;
+  width: 100px;
+  height: 16px;
+  padding: 5px;
+  font-size: 14px;
+  text-align: center;
+  color: whitesmoke;
+  background-color: #c05c67;
+  border-radius: 2px;
+  cursor: pointer;
+`;
+
 const HomePresenter = ({
   chance,
   percent,
@@ -58,20 +97,41 @@ const HomePresenter = ({
 }) => {
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
-        <Input
-          placeholder="Copy and paste the Numbers of step"
-          value={searchTerm}
-          onChange={updateTerm}
-        ></Input>
-        <SearchIcon onClick={handleSubmit}>
-          <FontAwesomeIcon
-            icon={faSearchDollar}
-            size="2x"
-            color="rgb(35, 49, 64)"
-          />
-        </SearchIcon>
-      </Form>
+      <>
+        <Form onSubmit={handleSubmit}>
+          <Input
+            placeholder="Copy and paste the Numbers of step"
+            value={searchTerm}
+            onChange={updateTerm}
+          ></Input>
+          <SearchIcon onClick={handleSubmit}>
+            <FontAwesomeIcon
+              icon={faSearchDollar}
+              size="2x"
+              color="rgb(35, 49, 64)"
+            />
+          </SearchIcon>
+        </Form>
+        <AuthForm style={{ marginBottom: "20px" }}>
+          <SInput
+            name="clientSeed"
+            type="text"
+            placeholder="Client Seed "
+            required
+            // value={clientSeed}
+            // onChange={onChange}
+          ></SInput>
+          <SInput
+            name="erverSeed"
+            type="text"
+            placeholder="Server Seed"
+            required
+            // value={serverSeed}
+            // onChange={onChange}
+          ></SInput>
+          <SSubmit type="submit" value="Save"></SSubmit>
+        </AuthForm>
+      </>
       {loading ? (
         <Loader></Loader>
       ) : (
