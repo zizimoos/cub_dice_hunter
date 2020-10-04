@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/cub_dice_hunter/precache-manifest.fed28fb72403ca0fed3a232940882237.js"
+  "/cub_dice_hunter/precache-manifest.0b458094cd35496a9b6b3f8d2cb7ee46.js"
 );
 
 self.addEventListener('message', (event) => {
