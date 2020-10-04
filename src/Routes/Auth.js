@@ -161,7 +161,9 @@ const Auth = () => {
             value={newAccount ? "Create Account" : "Log In"}
           ></Submit>
         </AuthForm>
-        <p>{error ? `Error : ${error}` : null}</p>
+        <p style={{ color: "white", marginRight: "20px" }}>
+          {error ? `Error : ${error}` : null}
+        </p>
       </AuthFormBox>
     </Container>
   );
