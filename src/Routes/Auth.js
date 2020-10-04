@@ -111,7 +111,7 @@ const Auth = ({ history }) => {
           console.log("이미 다른 곳에서 접속중입니다.");
           setError("이미 다른 곳에서 접속중입니다.");
           setLogin({ loggIn: false });
-          return history.push("/product");
+          history.replace("/production");
         } else if (check.length === 0) {
           await authService.signInWithEmailAndPassword(email, password);
           setError("로그인 중입니다.");
