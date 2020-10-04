@@ -110,25 +110,29 @@ const Auth = () => {
           console.log("이미 다른 곳에서 접속중입니다.");
           setError("이미 다른 곳에서 접속중입니다.");
           setLogin({ loggIn: false });
+        } else {
+          await authService.signInWithEmailAndPassword(email, password);
+          setError("로그인 중입니다.");
+          if (!login) {
+            setLogin({ loggIn: true });
+          }
+
+          await getLoggedIds();
+          await dbService
+            .collection("loggedID")
+            .add({
+              loggedId: email,
+              createAt: Date.now(),
+            })
+            .then(function (docRef) {
+              // console.log("Document written with ID: ", docRef.id);
+              dockId = docRef.id;
+              dbService
+                .collection("loggedID")
+                .doc(docRef.id)
+                .set({ id: docRef.id, loggedId: email });
+            });
         }
-        await authService.signInWithEmailAndPassword(email, password);
-        setError("로그인 중입니다.");
-        setLogin({ loggIn: true });
-        await getLoggedIds();
-        await dbService
-          .collection("loggedID")
-          .add({
-            loggedId: email,
-            createAt: Date.now(),
-          })
-          .then(function (docRef) {
-            // console.log("Document written with ID: ", docRef.id);
-            dockId = docRef.id;
-            dbService
-              .collection("loggedID")
-              .doc(docRef.id)
-              .set({ id: docRef.id, loggedId: email });
-          });
       }
     } catch (error) {
       setError(error.message);
