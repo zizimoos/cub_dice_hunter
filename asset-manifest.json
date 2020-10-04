@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/cub_dice_hunter/static/js/main.52ab3629.chunk.js",
-    "main.js.map": "/cub_dice_hunter/static/js/main.52ab3629.chunk.js.map",
+    "main.js": "/cub_dice_hunter/static/js/main.9013e9b4.chunk.js",
+    "main.js.map": "/cub_dice_hunter/static/js/main.9013e9b4.chunk.js.map",
     "runtime-main.js": "/cub_dice_hunter/static/js/runtime-main.4e4fb53e.js",
     "runtime-main.js.map": "/cub_dice_hunter/static/js/runtime-main.4e4fb53e.js.map",
     "static/js/2.918253ae.chunk.js": "/cub_dice_hunter/static/js/2.918253ae.chunk.js",
     "static/js/2.918253ae.chunk.js.map": "/cub_dice_hunter/static/js/2.918253ae.chunk.js.map",
     "index.html": "/cub_dice_hunter/index.html",
-    "precache-manifest.de3d5ee0fbb989db3c092f4b06334b14.js": "/cub_dice_hunter/precache-manifest.de3d5ee0fbb989db3c092f4b06334b14.js",
+    "precache-manifest.0d66e31aded2ebae4cc784797cb8137b.js": "/cub_dice_hunter/precache-manifest.0d66e31aded2ebae4cc784797cb8137b.js",
     "service-worker.js": "/cub_dice_hunter/service-worker.js",
     "static/js/2.918253ae.chunk.js.LICENSE.txt": "/cub_dice_hunter/static/js/2.918253ae.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.4e4fb53e.js",
     "static/js/2.918253ae.chunk.js",
-    "static/js/main.52ab3629.chunk.js"
+    "static/js/main.9013e9b4.chunk.js"
   ]
 }
