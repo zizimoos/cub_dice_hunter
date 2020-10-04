@@ -62,7 +62,7 @@ const SInput = styled.input`
   height: 16px;
   padding: 5px;
   font-size: 14px;
-
+  text-align: center;
   background-color: #4a5d70;
   ::placeholder {
     /* background-color: rgba(255, 255, 255, 0.2); */
@@ -147,7 +147,7 @@ const HomePresenter = ({
             S :{" "}
           </span>
           <SInput
-            name="erverSeed"
+            name="serverSeed"
             type="text"
             placeholder="Server Seed"
             required
