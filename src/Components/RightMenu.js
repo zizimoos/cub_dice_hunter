@@ -40,8 +40,8 @@ const Slink = styled(Link)`
 const RightNav = ({ location: { pathname }, open, userObj }) => {
   const preSignOut = async () => {
     try {
-      console.log("Document written with ID in Menu: ", dockId);
-      console.log("authService.currentUser", authService.currentUser.email);
+      //console.log("Document written with ID in Menu: ", dockId);
+      //console.log("authService.currentUser", authService.currentUser.email);
       await dbService.collection("loggedID").doc(`${dockId}`).delete();
     } catch {
     } finally {

@@ -118,7 +118,7 @@ const Auth = () => {
           createAt: Date.now(),
         })
         .then(function (docRef) {
-          console.log("Document written with ID: ", docRef.id);
+          // console.log("Document written with ID: ", docRef.id);
           dockId = docRef.id;
           dbService
             .collection("loggedID")

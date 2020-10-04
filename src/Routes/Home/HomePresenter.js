@@ -93,6 +93,7 @@ const HomePresenter = ({
           ></BarChart>
         </>
       )}
+      1
     </Container>
   );
 };
