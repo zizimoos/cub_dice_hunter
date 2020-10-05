@@ -56,6 +56,7 @@ const HomeContainer = () => {
       };
       setFindedRDB((prev) => [findedDataObject, ...prev]);
     });
+    //findedRDB의 length가 500개 이상이면, 하나씩 줄여나간다???
   };
 
   const searchByTerm = async () => {
@@ -85,6 +86,7 @@ const HomeContainer = () => {
       setOverfifteen(0);
       // setPercent([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     } else if (sameTerm.length > 0) {
+      setError("");
       setChance(sameTerm[0].chanceNumbers);
       setSum(sameTerm[0].sum);
       setOverfifteen(sameTerm[0].overfifteen);

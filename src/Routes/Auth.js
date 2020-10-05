@@ -127,6 +127,8 @@ const Auth = ({ history }) => {
             .then(function (docRef) {
               // console.log("Document written with ID: ", docRef.id);
               dockId = docRef.id;
+              // dockId를 localstorage에 저장해놨다가, signOut 할때 사용할 수 있도록 할 것
+              // 관리자 화면 만들때를 위해서 디비 리스트 저장해 놓을 필요 있음.
               dbService
                 .collection("loggedID")
                 .doc(docRef.id)
