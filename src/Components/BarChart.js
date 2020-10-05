@@ -60,10 +60,10 @@ const OverTwelve = styled.span`
   color: whitesmoke;
   font-size: 16px;
 `;
-const BarChart = ({ chance, sum, overfifteen, findDBForSameTerm }) => {
+const BarChart = ({ chance, sum, overfifteen, findDBForSameTerm, loading }) => {
   useEffect(() => {
     findDBForSameTerm();
-  });
+  }, [loading]);
   return (
     <Container>
       {chance.map((cn, index) => (

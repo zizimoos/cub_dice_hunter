@@ -177,6 +177,7 @@ const HomePresenter = ({
             sum={sum}
             overfifteen={overfifteen}
             findDBForSameTerm={findDBForSameTerm}
+            loading={loading}
           ></BarChart>
         </>
       )}
