@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HomePresenter from "./HomePresenter";
 import { dbService } from "../../fbase";
 
@@ -46,8 +46,6 @@ const HomeContainer = () => {
     setSearchTerm(value);
   };
 
-  const xxxxx = [];
-
   const findDBForSameTerm = async () => {
     const findedData = await dbService.collection("searchedData").get();
 
@@ -57,7 +55,6 @@ const HomeContainer = () => {
         id: document.id,
       };
       setFindedRDB((prev) => [findedDataObject, ...prev]);
-      xxxxx.push(findedDataObject);
     });
   };
 
@@ -170,6 +167,9 @@ const HomeContainer = () => {
       return setLoading(false);
     }, 3000 + Math.floor(Math.random() * 1000));
   }
+  useEffect(() => {
+    findDBForSameTerm();
+  }, [loading]);
 
   return (
     <HomePresenter

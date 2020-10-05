@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
 
 const Container = styled.div`
@@ -60,10 +60,10 @@ const OverTwelve = styled.span`
   color: whitesmoke;
   font-size: 16px;
 `;
-const BarChart = ({ chance, sum, overfifteen, findDBForSameTerm, loading }) => {
-  useEffect(() => {
-    findDBForSameTerm();
-  }, [loading]);
+const BarChart = ({ chance, sum, overfifteen, findDBForSameTerm }) => {
+  // useEffect(() => {
+  //   findDBForSameTerm();
+  // }, []);
   return (
     <Container>
       {chance.map((cn, index) => (
