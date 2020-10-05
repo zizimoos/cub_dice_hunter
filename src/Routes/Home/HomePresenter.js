@@ -103,6 +103,7 @@ const HomePresenter = ({
   onChangeClient,
   serverSeed,
   clientSeed,
+  findDBForSameTerm,
 }) => {
   return (
     <Container>
@@ -175,6 +176,7 @@ const HomePresenter = ({
             chance={chance}
             sum={sum}
             overfifteen={overfifteen}
+            findDBForSameTerm={findDBForSameTerm}
           ></BarChart>
         </>
       )}

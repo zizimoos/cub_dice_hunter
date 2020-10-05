@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import HomePresenter from "./HomePresenter";
+import { dbService } from "../../fbase";
 
 const HomeContainer = () => {
   const [chance, setChance] = useState([]);
@@ -12,22 +13,15 @@ const HomeContainer = () => {
   const [xData, setXdata] = useState([]);
   const [serverSeed, setServerSeed] = useState("");
   const [clientSeed, setClientSeed] = useState("");
+  const [findedRDB, setFindedRDB] = useState([]);
 
-  const onSubmit = (event) => {
-    // event.preventDefault();
-    // if (serverSeed !== "") {
-    //   setServerSeed(serverSeed);
-    // }
-    // if (clientSeed !== "") {
-    //   setClientSeed(clientSeed);
-    // }
-  };
+  const onSubmit = (event) => {};
+
   const onChangeClient = (event) => {
     event.preventDefault();
     const {
       target: { value },
     } = event;
-    console.log(value);
     setClientSeed(value);
   };
   const onChangeServer = (event) => {
@@ -35,7 +29,6 @@ const HomeContainer = () => {
     const {
       target: { value },
     } = event;
-    console.log(value);
     setServerSeed(value);
   };
 
@@ -53,14 +46,31 @@ const HomeContainer = () => {
     setSearchTerm(value);
   };
 
-  const searchByTerm = () => {
+  const xxxxx = [];
+
+  const findDBForSameTerm = async () => {
+    const findedData = await dbService.collection("searchedData").get();
+
+    findedData.forEach((document) => {
+      const findedDataObject = {
+        ...document.data(),
+        id: document.id,
+      };
+      setFindedRDB((prev) => [findedDataObject, ...prev]);
+      xxxxx.push(findedDataObject);
+    });
+  };
+
+  const searchByTerm = async () => {
     const arrayData = searchTerm.split(",").map((d) => parseInt(d));
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const conditionSum = arrayData.reduce(reducer);
 
+    const conditionSum = arrayData.reduce(reducer);
     const notANumber = arrayData.includes(NaN);
     const includeZero = arrayData.includes(0);
     const biggerThan = arrayData.filter((n) => n > 28);
+
+    const sameTerm = findedRDB.filter((x) => x.searchTerm === searchTerm);
 
     if (
       arrayData.length > 6 ||
@@ -77,15 +87,20 @@ const HomeContainer = () => {
       setSum(10);
       setOverfifteen(0);
       // setPercent([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-    } else if (JSON.stringify(xData) === JSON.stringify(arrayData)) {
+    } else if (sameTerm.length > 0) {
+      setChance(sameTerm[0].chanceNumbers);
+      setSum(sameTerm[0].sum);
+      setOverfifteen(sameTerm[0].overfifteen);
+      setPercent(sameTerm[0].cnn);
+      if (loading === false) {
+        setLoading(true);
+      }
+
       return;
-    } else if (
-      // arrayData.length === 6 &&
-      JSON.stringify(xData) !== JSON.stringify(arrayData)
-    ) {
+    } else if (JSON.stringify(xData) !== JSON.stringify(arrayData)) {
       setXdata(arrayData);
       numberGen();
-      setSearchTerm("");
+      // setSearchTerm("");
       setError("");
     }
   };
@@ -93,7 +108,7 @@ const HomeContainer = () => {
   const chanceNumbers = [];
   let chanceNumber = 0;
 
-  const numberGen = () => {
+  const numberGen = async () => {
     for (let i = 0; i < 12; i++) {
       if (i < 7) {
         chanceNumber =
@@ -121,6 +136,33 @@ const HomeContainer = () => {
     if (loading === false) {
       setLoading(true);
     }
+    // 유저 아이디 와 searchTerm 과 결과 데이터를 저장 ~
+    await dbService
+      .collection("searchedData")
+      .add({
+        loggedId: "email",
+        createAt: Date.now(),
+        chanceNumbers: chanceNumbers,
+        sum: sum,
+        overfifteen: overfifteen,
+        cnn: cnn,
+      })
+      .then(function (docRef) {
+        // console.log("Document written with ID: ", docRef.id);
+        // dockId = docRef.id;
+        dbService.collection("searchedData").doc(docRef.id).set({
+          id: docRef.id,
+          loggedId: "email",
+          createAt: Date.now(),
+          searchTerm: searchTerm,
+          chanceNumbers: chanceNumbers,
+          sum: sum,
+          overfifteen: overfifteen,
+          cnn: cnn,
+        });
+      });
+
+    // searchTerm 이 이미 같은 것이 있으면 저장하지 않음
   };
 
   if (loading === true) {
@@ -145,6 +187,7 @@ const HomeContainer = () => {
       onChangeServer={onChangeServer}
       serverSeed={serverSeed}
       clientSeed={clientSeed}
+      findDBForSameTerm={findDBForSameTerm}
     ></HomePresenter>
   );
 };
