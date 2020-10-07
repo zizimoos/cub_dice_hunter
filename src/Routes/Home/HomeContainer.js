@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HomePresenter from "./HomePresenter";
 import { dbService } from "../../fbase";
+import AudioUrl from "../../assets/sound/barAlarm.mp3";
 
 const HomeContainer = () => {
   const [chance, setChance] = useState([]);
@@ -14,6 +15,7 @@ const HomeContainer = () => {
   const [serverSeed, setServerSeed] = useState("");
   const [clientSeed, setClientSeed] = useState("");
   const [findedRDB, setFindedRDB] = useState([]);
+  const [soundEffect] = useState(new Audio(AudioUrl));
 
   const onSubmit = (event) => {};
 
@@ -45,10 +47,14 @@ const HomeContainer = () => {
     } = event;
     setSearchTerm(value);
   };
+  const playSoundEffect = () => {
+    if (loading === false) {
+      soundEffect.play();
+    }
+  };
 
   const findDBForSameTerm = async () => {
     const findedData = await dbService.collection("searchedData").get();
-
     findedData.forEach((document) => {
       const findedDataObject = {
         ...document.data(),
@@ -94,13 +100,18 @@ const HomeContainer = () => {
       if (loading === false) {
         setLoading(true);
       }
-
+      setTimeout(() => {
+        playSoundEffect();
+      }, 0);
       return;
     } else if (JSON.stringify(xData) !== JSON.stringify(arrayData)) {
       setXdata(arrayData);
       numberGen();
       // setSearchTerm("");
       setError("");
+      setTimeout(() => {
+        playSoundEffect();
+      }, 0);
     }
   };
 
@@ -166,7 +177,7 @@ const HomeContainer = () => {
 
   if (loading === true) {
     setTimeout(() => {
-      return setLoading(false);
+      setLoading(false);
     }, 3000 + Math.floor(Math.random() * 1000));
   }
   useEffect(() => {
@@ -190,6 +201,7 @@ const HomeContainer = () => {
       serverSeed={serverSeed}
       clientSeed={clientSeed}
       findDBForSameTerm={findDBForSameTerm}
+      playSoundEffect={playSoundEffect}
     ></HomePresenter>
   );
 };
