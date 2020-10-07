@@ -54,7 +54,8 @@ const EndBarUnit = styled.div`
   justify-content: flex-end;
   padding-top: 6px;
   width: 150px;
-  color: rgb(35, 49, 64);
+  color: red;
+  /* color: rgb(35, 49, 64); */
 `;
 const OverTwelve = styled.span`
   color: whitesmoke;

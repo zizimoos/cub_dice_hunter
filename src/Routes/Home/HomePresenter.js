@@ -28,7 +28,8 @@ const Input = styled.input`
   padding-left: 30px;
   font-size: 16px;
   border-radius: 3px;
-  background-color: #4a5d70;
+  background-color: white;
+  /* background-color: #4a5d70; */
   ::placeholder {
     color: rgba(255, 255, 255, 0.2);
   }
