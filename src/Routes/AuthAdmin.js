@@ -98,11 +98,26 @@ const Auth = () => {
     console.log("autoGenID");
     try {
       if (true) {
-        for (let i = 0; i < 10; i++) {
-          let aemail = "bravo_004" + i + "@busta.com";
-          let apassword = "bravo_004" + i;
-          console.log(aemail, apassword);
-          await authService.createUserWithEmailAndPassword(aemail, apassword);
+        for (let i = 0; i < 1000; i++) {
+          if (i < 10) {
+            let aemail = "winner_000" + i + "@busta.com";
+            let apassword =
+              "victory" + i * Math.floor(Math.random() * 1000 + 111);
+            console.log("id :" + aemail, "password :" + apassword);
+            await authService.createUserWithEmailAndPassword(aemail, apassword);
+          } else if (i > 9 && i < 100) {
+            let aemail = "winner_00" + i + "@busta.com";
+            let apassword =
+              "victory" + i * Math.floor(Math.random() * 1000 + 111);
+            console.log("id :" + aemail, "password :" + apassword);
+            await authService.createUserWithEmailAndPassword(aemail, apassword);
+          } else if (i > 99 && i < 1000) {
+            let aemail = "winner_0" + i + "@busta.com";
+            let apassword =
+              "victory" + i * Math.floor(Math.random() * 1000 + 111);
+            console.log("id :" + aemail, "password :" + apassword);
+            await authService.createUserWithEmailAndPassword(aemail, apassword);
+          }
         }
       }
     } catch (error) {
