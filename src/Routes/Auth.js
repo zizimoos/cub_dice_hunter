@@ -10,6 +10,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(45, 63, 81);
 `;
 const Greeting = styled.div`
   color: whitesmoke;
