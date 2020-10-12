@@ -8,6 +8,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgb(45, 63, 81);
 `;
 const Greeting = styled.div`
   color: whitesmoke;
@@ -92,6 +93,23 @@ const Auth = () => {
     }
   };
 
+  const autoGenId = async (event) => {
+    event.preventDefault();
+    console.log("autoGenID");
+    try {
+      if (true) {
+        for (let i = 0; i < 10; i++) {
+          let aemail = "bravo_004" + i + "@busta.com";
+          let apassword = "bravo_004" + i;
+          console.log(aemail, apassword);
+          await authService.createUserWithEmailAndPassword(aemail, apassword);
+        }
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   const toggleAccount = () => setNewAccount((prev) => !prev);
 
   const socialOnclick = (event) => {
@@ -107,6 +125,9 @@ const Auth = () => {
     <Container>
       <AuthFormBox>
         <Greeting>Time to DiceHunter</Greeting>
+        <Button onClick={autoGenId}>
+          {newAccount ? "Acreate" : "Create Account"}
+        </Button>
         <AuthForm onSubmit={onSubmit}>
           <Input
             name="email"
@@ -141,6 +162,7 @@ const Auth = () => {
         <Button onClick={toggleAccount}>
           {newAccount ? "login" : "Create Account"}
         </Button>
+
         <p>{error ? `error : ${error}` : null}</p>
       </AuthFormBox>
     </Container>
