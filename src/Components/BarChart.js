@@ -1,8 +1,5 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { dbService } from "../fbase";
-import { authService } from "fbase";
-import { dockId } from "../Routes/Auth";
 
 const Container = styled.div`
   position: absolute;
@@ -65,23 +62,6 @@ const OverTwelve = styled.span`
   font-size: 16px;
 `;
 const BarChart = ({ chance, sum, overfifteen, loading }) => {
-  const SignOut = async () => {
-    authService.signOut();
-  };
-  const listener = async (event) => {
-    event.preventDefault();
-    event.returnValue = "";
-    try {
-      //console.log("Document written with ID in Menu: ", dockId);
-      //console.log("authService.currentUser", authService.currentUser.email);
-      await dbService.collection("loggedID").doc(`${dockId}`).delete();
-    } catch {
-    } finally {
-      SignOut();
-    }
-  };
-  window.addEventListener("beforeunload", listener);
-
   return (
     <Container>
       {chance.map((cn, index) => (

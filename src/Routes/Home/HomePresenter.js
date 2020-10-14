@@ -4,9 +4,6 @@ import Loader from "../../Components/Loader";
 import BarChart from "../../Components/BarChart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchDollar } from "@fortawesome/free-solid-svg-icons";
-import { dbService } from "../../fbase";
-import { authService } from "fbase";
-import { dockId } from "../../Routes/Auth";
 
 const Container = styled.div`
   width: 100vw;
@@ -110,23 +107,6 @@ const HomePresenter = ({
   findDBForSameTerm,
   // playSoundEffect,
 }) => {
-  const SignOut = async () => {
-    authService.signOut();
-  };
-  const listener = async (event) => {
-    event.preventDefault();
-    event.returnValue = "";
-    try {
-      //console.log("Document written with ID in Menu: ", dockId);
-      //console.log("authService.currentUser", authService.currentUser.email);
-      await dbService.collection("loggedID").doc(`${dockId}`).delete();
-    } catch {
-    } finally {
-      SignOut();
-    }
-  };
-  window.addEventListener("beforeunload", listener);
-
   return (
     <Container>
       <>
