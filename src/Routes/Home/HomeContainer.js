@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import HomePresenter from "./HomePresenter";
 import { dbService } from "../../fbase";
+import { authService } from "fbase";
+import { dockId } from "../../Routes/Auth";
 // import AudioUrl from "../../assets/sound/barAlarm.mp3";
 
 const HomeContainer = () => {
@@ -175,11 +177,29 @@ const HomeContainer = () => {
     // searchTerm 이 이미 같은 것이 있으면 저장하지 않음
   };
 
+  const SignOut = async () => {
+    authService.signOut();
+  };
+  const listener = async (event) => {
+    event.preventDefault();
+    event.returnValue = "";
+    try {
+      //console.log("Document written with ID in Menu: ", dockId);
+      //console.log("authService.currentUser", authService.currentUser.email);
+      await dbService.collection("loggedID").doc(`${dockId}`).delete();
+    } catch {
+    } finally {
+      SignOut();
+    }
+  };
+  window.addEventListener("beforeunload", listener);
+
   if (loading === true) {
     setTimeout(() => {
       setLoading(false);
     }, 3000 + Math.floor(Math.random() * 1000));
   }
+
   useEffect(() => {
     findDBForSameTerm();
   }, [loading]);
