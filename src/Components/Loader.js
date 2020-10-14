@@ -8,7 +8,7 @@ export default () => {
       color="#00BFFF"
       height={250}
       width={250}
-      timeout={3000} //3 secs
+      timeout={2000} //3 secs
     />
   );
 };

@@ -105,7 +105,7 @@ const HomePresenter = ({
   serverSeed,
   clientSeed,
   findDBForSameTerm,
-  playSoundEffect,
+  // playSoundEffect,
 }) => {
   return (
     <Container>
@@ -179,7 +179,6 @@ const HomePresenter = ({
             sum={sum}
             overfifteen={overfifteen}
             findDBForSameTerm={findDBForSameTerm}
-            playSoundEffect={playSoundEffect}
             loading={loading}
           ></BarChart>
         </>

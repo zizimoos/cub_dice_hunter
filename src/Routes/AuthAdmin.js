@@ -98,7 +98,7 @@ const Auth = () => {
     console.log("autoGenID");
     try {
       if (true) {
-        for (let i = 112; i < 300; i++) {
+        for (let i = 250; i < 300; i++) {
           if (i < 10) {
             let aemail = "cheer_000" + i + "@busta.com";
             let apassword =
