@@ -151,7 +151,8 @@ const Auth = ({ history }) => {
   return (
     <Container>
       <AuthFormBox>
-        <Greeting>Time to DiceHunter</Greeting>
+        {/* <Greeting>Time to DiceHunter</Greeting> */}
+        <Greeting>SignOut 해주세요 </Greeting>
         <AuthForm style={{ marginBottom: "20px" }} onSubmit={onSubmit}>
           <Input
             name="email"
