@@ -53,22 +53,22 @@ const RightNav = ({ location: { pathname }, open, userObj }) => {
   const SignOut = async () => {
     authService.signOut();
   };
-  // //beforeunload event를 사용해서
-  // const listener = async (event) => {
-  //   event.preventDefault();
-  //   event.returnValue = "";
-  //   try {
-  //     //console.log("Document written with ID in Menu: ", dockId);
-  //     //console.log("authService.currentUser", authService.currentUser.email);
-  //     authService
-  //       .signOut()
-  //       .then(await dbService.collection("loggedID").doc(`${dockId}`).delete());
-  //   } catch {
-  //   } finally {
-  //     SignOut();
-  //   }
-  // };
-  // window.addEventListener("beforeunload", listener);
+  //beforeunload event를 사용해서
+  const listener = async (event) => {
+    event.preventDefault();
+    event.returnValue = "";
+    try {
+      //console.log("Document written with ID in Menu: ", dockId);
+      //console.log("authService.currentUser", authService.currentUser.email);
+      authService
+        .signOut()
+        .then(await dbService.collection("loggedID").doc(`${dockId}`).delete());
+    } catch {
+    } finally {
+      SignOut();
+    }
+  };
+  window.addEventListener("beforeunload", listener);
 
   return (
     <List open={open}>

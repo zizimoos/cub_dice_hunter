@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import HomePresenter from "./HomePresenter";
 import { dbService } from "../../fbase";
 
-import { authService } from "fbase";
-// import { dbService } from "../../fbase";
-import { dockId } from "../../Routes/Auth";
+// import { authService } from "fbase";
+// import { dockId } from "../../Routes/Auth";
 
 // import AudioUrl from "../../assets/sound/barAlarm.mp3";
 
@@ -22,24 +21,24 @@ const HomeContainer = () => {
   const [findedRDB, setFindedRDB] = useState([]);
   // const [soundEffect] = useState(new Audio(AudioUrl));
 
-  const SignOut = async () => {
-    authService.signOut();
-  };
-  const listener = async (event) => {
-    event.preventDefault();
-    event.returnValue = "";
-    try {
-      //console.log("Document written with ID in Menu: ", dockId);
-      //console.log("authService.currentUser", authService.currentUser.email);
-      authService
-        .signOut()
-        .then(await dbService.collection("loggedID").doc(`${dockId}`).delete());
-    } catch {
-    } finally {
-      SignOut();
-    }
-  };
-  window.addEventListener("beforeunload", listener);
+  // const SignOut = async () => {
+  //   authService.signOut();
+  // };
+  // const listener = async (event) => {
+  //   event.preventDefault();
+  //   event.returnValue = "";
+  //   try {
+  //     //console.log("Document written with ID in Menu: ", dockId);
+  //     //console.log("authService.currentUser", authService.currentUser.email);
+  //     authService
+  //       .signOut()
+  //       .then(await dbService.collection("loggedID").doc(`${dockId}`).delete());
+  //   } catch {
+  //   } finally {
+  //     SignOut();
+  //   }
+  // };
+  // window.addEventListener("beforeunload", listener);
 
   const onSubmit = (event) => {};
 
