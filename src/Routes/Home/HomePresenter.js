@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchDollar } from "@fortawesome/free-solid-svg-icons";
 
 import { authService } from "fbase";
-import { dbService } from "../fbase";
-import { dockId } from "../Routes/Auth";
+import { dbService } from "../../fbase";
+import { dockId } from "../../Routes/Auth";
 
 const Container = styled.div`
   width: 100vw;
