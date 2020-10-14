@@ -41,6 +41,7 @@ const BarUnitAnimation = (y) => keyframes`
 `;
 
 const BarUnit = styled.span`
+  cursor: pointer;
   display: inline-block;
   height: 25px;
   background-color: #02fe7c;
@@ -58,7 +59,7 @@ const EndBarUnit = styled.div`
   justify-content: flex-end;
   padding-top: 6px;
   width: 150px;
-  color: red;
+  color: #ec644b;
   /* color: rgb(35, 49, 64); */
 `;
 const OverTwelve = styled.span`
