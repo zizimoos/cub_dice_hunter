@@ -51,6 +51,7 @@ const HomeContainer = () => {
     setClientSeed(value);
     window.addEventListener("beforeunload", listener);
   };
+
   const onChangeServer = (event) => {
     event.preventDefault();
     const {
@@ -60,12 +61,25 @@ const HomeContainer = () => {
     window.addEventListener("beforeunload", listener);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (searchTerm !== "") {
-      searchByTerm(searchTerm);
-    }
+  const searchTermCondition = () => {
+    searchByTerm(searchTerm);
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (searchTerm.includes(" ")) {
+      setError("스페이스가 포함 되어있습니다. 검색버튼을 한번 더 누르세요");
+      await setSearchTerm(searchTerm.trim());
+      return;
+    }
+    if (!searchTerm.includes(" ")) {
+      searchTermCondition();
+    }
+    // if (searchTerm !== "") {
+    //   searchByTerm(searchTerm);
+    // }
+  };
+
   const updateTerm = (event) => {
     event.preventDefault();
     const {
@@ -92,7 +106,7 @@ const HomeContainer = () => {
 
     console.log("findedData.length", findedData.Of.docChanges.length);
 
-    if (findedData.Of.docChanges.length > 1000) {
+    if (findedData.Of.docChanges.length > 500) {
       findedData.forEach((document) => {
         // console.log(document.id);
         dbService.collection("searchedData").doc(document.id).delete();
@@ -101,9 +115,11 @@ const HomeContainer = () => {
   };
 
   const searchByTerm = async () => {
-    const arrayData = searchTerm.split(",").map((d) => parseInt(d));
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const noneSearchTerm = searchTerm.trim();
+    const arrayData = noneSearchTerm.split(",").map((d) => parseInt(d));
 
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    console.log(arrayData);
     const conditionSum = arrayData.reduce(reducer);
     const notANumber = arrayData.includes(NaN);
     const includeZero = arrayData.includes(0);
