@@ -49,6 +49,7 @@ const HomeContainer = () => {
       target: { value },
     } = event;
     setClientSeed(value);
+    window.addEventListener("beforeunload", listener);
   };
   const onChangeServer = (event) => {
     event.preventDefault();
@@ -56,6 +57,7 @@ const HomeContainer = () => {
       target: { value },
     } = event;
     setServerSeed(value);
+    window.addEventListener("beforeunload", listener);
   };
 
   const handleSubmit = (event) => {
@@ -208,6 +210,8 @@ const HomeContainer = () => {
   useEffect(() => {
     findDBForSameTerm();
   }, [loading]);
+
+  window.addEventListener("beforeunload", listener);
 
   return (
     <HomePresenter
