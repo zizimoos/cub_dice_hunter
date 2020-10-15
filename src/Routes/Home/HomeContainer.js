@@ -92,7 +92,7 @@ const HomeContainer = () => {
 
     console.log("findedData.length", findedData.Of.docChanges.length);
 
-    if (findedData.Of.docChanges.length > 350) {
+    if (findedData.Of.docChanges.length > 1000) {
       findedData.forEach((document) => {
         // console.log(document.id);
         dbService.collection("searchedData").doc(document.id).delete();
