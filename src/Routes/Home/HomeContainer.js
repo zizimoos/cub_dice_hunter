@@ -81,6 +81,7 @@ const HomeContainer = () => {
 
   const findDBForSameTerm = async () => {
     const findedData = await dbService.collection("searchedData").get();
+
     findedData.forEach((document) => {
       const findedDataObject = {
         ...document.data(),
@@ -88,7 +89,15 @@ const HomeContainer = () => {
       };
       setFindedRDB((prev) => [findedDataObject, ...prev]);
     });
-    //findedRDB의 length가 500개 이상이면, 하나씩 줄여나간다???
+
+    console.log("findedData.length", findedData.Of.docChanges.length);
+
+    if (findedData.Of.docChanges.length > 350) {
+      findedData.forEach((document) => {
+        // console.log(document.id);
+        dbService.collection("searchedData").doc(document.id).delete();
+      });
+    }
   };
 
   const searchByTerm = async () => {
@@ -159,7 +168,7 @@ const HomeContainer = () => {
       }
     }
 
-    const overfifteen = Math.floor(Math.random() * 100) + 1;
+    const overfifteen = Math.floor(Math.random() * 100) + 9;
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     const sum = chanceNumbers.reduce(reducer) + overfifteen;
     const cnn = chanceNumbers.map((cn) =>
