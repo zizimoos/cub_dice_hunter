@@ -104,7 +104,7 @@ const HomeContainer = () => {
       setFindedRDB((prev) => [findedDataObject, ...prev]);
     });
 
-    console.log("findedData.length", findedData.Of.docChanges.length);
+    // console.log("findedData.length", findedData.Of.docChanges.length);
 
     if (findedData.Of.docChanges.length > 500) {
       findedData.forEach((document) => {
