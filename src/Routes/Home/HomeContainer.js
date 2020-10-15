@@ -119,7 +119,7 @@ const HomeContainer = () => {
     const arrayData = noneSearchTerm.split(",").map((d) => parseInt(d));
 
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    console.log(arrayData);
+    // console.log(arrayData);
     const conditionSum = arrayData.reduce(reducer);
     const notANumber = arrayData.includes(NaN);
     const includeZero = arrayData.includes(0);
