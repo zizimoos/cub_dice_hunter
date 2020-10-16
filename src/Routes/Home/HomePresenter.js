@@ -100,8 +100,8 @@ const HomePresenter = ({
   searchTerm,
   updateTerm,
   onSubmit,
-  // onChangeServer,
-  // onChangeClient,
+  onChangeServer,
+  onChangeClient,
   serverSeed,
   clientSeed,
   findDBForSameTerm,
@@ -139,7 +139,7 @@ const HomePresenter = ({
             placeholder="Client Seed "
             required
             value={clientSeed}
-            // onChange={onChangeClient}
+            onChange={onChangeClient}
           ></SInput>
           <span
             style={{
@@ -155,7 +155,7 @@ const HomePresenter = ({
             placeholder="Server Seed"
             required
             value={serverSeed}
-            // onChange={onChangeServer}
+            onChange={onChangeServer}
           ></SInput>
           {/* <SSubmit type="submit" value="Save"></SSubmit> */}
         </AuthForm>

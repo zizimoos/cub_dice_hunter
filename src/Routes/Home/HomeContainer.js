@@ -16,10 +16,10 @@ const HomeContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
   const [xData, setXdata] = useState([]);
-  const [serverSeed] = useState(
+  const [serverSeed, setServerSeed] = useState(
     "76974ca3243fea6f9c70ad33105c98b434f421b101f8544a4f44d44a012e0288_991a69ca52e8d3b97b05516fcb17816e3051caff35456f19a4a00b2b037d24a6"
   );
-  const [clientSeed] = useState("enfranchies hope");
+  const [clientSeed, setClientSeed] = useState("default average");
   const [findedRDB, setFindedRDB] = useState([]);
   // const [soundEffect] = useState(new Audio(AudioUrl));
 
@@ -45,23 +45,23 @@ const HomeContainer = () => {
     window.addEventListener("beforeunload", listener);
   };
 
-  // const onChangeClient = (event) => {
-  //   event.preventDefault();
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setClientSeed(value);
-  //   window.addEventListener("beforeunload", listener);
-  // };
+  const onChangeClient = (event) => {
+    event.preventDefault();
+    const {
+      target: { value },
+    } = event;
+    setClientSeed(value);
+    window.addEventListener("beforeunload", listener);
+  };
 
-  // const onChangeServer = (event) => {
-  //   event.preventDefault();
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setServerSeed(value);
-  //   window.addEventListener("beforeunload", listener);
-  // };
+  const onChangeServer = (event) => {
+    event.preventDefault();
+    const {
+      target: { value },
+    } = event;
+    setServerSeed(value);
+    window.addEventListener("beforeunload", listener);
+  };
 
   const searchTermCondition = () => {
     searchByTerm(searchTerm);
@@ -145,7 +145,7 @@ const HomeContainer = () => {
       setOverfifteen(0);
       // setPercent([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     } else if (sameTerm.length > 0) {
-      setError("보안을 위해 마무리 하실때는 꼭 Sign Out !");
+      setError("본인의 ID 보안을 위해 마무리 하실때는 꼭 Sign Out !");
       setChance(sameTerm[0].chanceNumbers);
       setSum(sameTerm[0].sum);
       setOverfifteen(sameTerm[0].overfifteen);
@@ -252,8 +252,8 @@ const HomeContainer = () => {
       error={error}
       overfifteen={overfifteen}
       onSubmit={onSubmit}
-      // onChangeClient={onChangeClient}
-      // onChangeServer={onChangeServer}
+      onChangeClient={onChangeClient}
+      onChangeServer={onChangeServer}
       serverSeed={serverSeed}
       clientSeed={clientSeed}
       findDBForSameTerm={findDBForSameTerm}
