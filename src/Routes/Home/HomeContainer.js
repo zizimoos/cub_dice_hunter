@@ -16,8 +16,10 @@ const HomeContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
   const [xData, setXdata] = useState([]);
-  const [serverSeed, setServerSeed] = useState("");
-  const [clientSeed, setClientSeed] = useState("");
+  const [serverSeed] = useState(
+    "76974ca3243fea6f9c70ad33105c98b434f421b101f8544a4f44d44a012e0288_991a69ca52e8d3b97b05516fcb17816e3051caff35456f19a4a00b2b037d24a6"
+  );
+  const [clientSeed] = useState("enfranchies hope");
   const [findedRDB, setFindedRDB] = useState([]);
   // const [soundEffect] = useState(new Audio(AudioUrl));
 
@@ -43,23 +45,23 @@ const HomeContainer = () => {
     window.addEventListener("beforeunload", listener);
   };
 
-  const onChangeClient = (event) => {
-    event.preventDefault();
-    const {
-      target: { value },
-    } = event;
-    setClientSeed(value);
-    window.addEventListener("beforeunload", listener);
-  };
+  // const onChangeClient = (event) => {
+  //   event.preventDefault();
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setClientSeed(value);
+  //   window.addEventListener("beforeunload", listener);
+  // };
 
-  const onChangeServer = (event) => {
-    event.preventDefault();
-    const {
-      target: { value },
-    } = event;
-    setServerSeed(value);
-    window.addEventListener("beforeunload", listener);
-  };
+  // const onChangeServer = (event) => {
+  //   event.preventDefault();
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setServerSeed(value);
+  //   window.addEventListener("beforeunload", listener);
+  // };
 
   const searchTermCondition = () => {
     searchByTerm(searchTerm);
@@ -250,8 +252,8 @@ const HomeContainer = () => {
       error={error}
       overfifteen={overfifteen}
       onSubmit={onSubmit}
-      onChangeClient={onChangeClient}
-      onChangeServer={onChangeServer}
+      // onChangeClient={onChangeClient}
+      // onChangeServer={onChangeServer}
       serverSeed={serverSeed}
       clientSeed={clientSeed}
       findDBForSameTerm={findDBForSameTerm}
