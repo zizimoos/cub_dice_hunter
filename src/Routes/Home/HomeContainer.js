@@ -104,7 +104,7 @@ const HomeContainer = () => {
       setFindedRDB((prev) => [findedDataObject, ...prev]);
     });
 
-    // console.log("findedData.length", findedData.Of.docChanges.length);
+    console.log("findedData.length", findedData.Of.docChanges.length);
 
     if (findedData.Of.docChanges.length > 500) {
       findedData.forEach((document) => {
@@ -143,7 +143,7 @@ const HomeContainer = () => {
       setOverfifteen(0);
       // setPercent([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     } else if (sameTerm.length > 0) {
-      setError("");
+      setError("보안을 위해 마무리 하실때는 꼭 Sign Out !");
       setChance(sameTerm[0].chanceNumbers);
       setSum(sameTerm[0].sum);
       setOverfifteen(sameTerm[0].overfifteen);

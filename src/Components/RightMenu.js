@@ -86,7 +86,11 @@ const RightNav = ({ location: { pathname }, open, userObj }) => {
         <Item current={pathname === "/detail"}>
           <Slink to="/detail">Detail</Slink>
         </Item> */}
-          <Item onClick={preSignOut} current={!authService.currentUser}>
+          <Item
+            onClick={preSignOut}
+            current={!authService.currentUser}
+            style={{ color: "#c05c67", fontWeight: 600 }}
+          >
             <Slink to="/">
               {authService.currentUser ? "Sign Out" : "Sign In"}
             </Slink>
@@ -100,6 +104,7 @@ const RightNav = ({ location: { pathname }, open, userObj }) => {
           <Item
             onClick={preSignOut}
             current={pathname === "/" && !authService.currentUser}
+            style={{ color: "#c05c67", fontWeight: 600 }}
           >
             <Slink to="/">
               {authService.currentUser ? "Sign Out" : "Sign In"}
