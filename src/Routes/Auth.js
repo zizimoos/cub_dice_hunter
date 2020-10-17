@@ -150,7 +150,7 @@ const Auth = ({ history }) => {
   return (
     <Container>
       <AuthFormBox>
-        <Greeting>Time to DiceHunter</Greeting>
+        <Greeting>Time to Busta</Greeting>
         <AuthForm style={{ marginBottom: "20px" }} onSubmit={onSubmit}>
           <Input
             name="email"
