@@ -71,9 +71,7 @@ const Auth = ({ history }) => {
   const [newAccount, setNewAccount] = useState(false);
   const [error, setError] = useState("");
   const [loggedIds, setLoggedIds] = useState([]);
-  const [login, setLogin] = useState({
-    loggIn: "",
-  });
+  const [login, setLogin] = useState(false);
 
   const getLoggedIds = async () => {
     const dbLoggedIds = await dbService.collection("loggedID").get();
@@ -107,16 +105,17 @@ const Auth = ({ history }) => {
         // log in
         await getLoggedIds();
         const check = loggedIds.filter((id) => id.loggedId === email);
-        if (check.length !== 0) {
-          console.log("이미 다른 곳에서 접속중입니다.");
-          setError("이미 다른 곳에서 접속중입니다.");
-          setLogin({ loggIn: false });
-          setTimeout(() => history.push("/production"), 2000);
-        } else if (check.length === 0) {
+        // if (check.length !== 0) {
+        //   console.log("이미 다른 곳에서 접속중입니다.");
+        //   setError("이미 다른 곳에서 접속중입니다.");
+        //   setLogin({ loggIn: false });
+        //   setTimeout(() => history.push("/production"), 2000);
+        // } else
+        if (check.length === 0 || check.length !== 0) {
           await authService.signInWithEmailAndPassword(email, password);
           setError("로그인 중입니다.");
           if (!login) {
-            setLogin({ loggIn: true });
+            setLogin(true);
           }
           await getLoggedIds();
           await dbService
@@ -133,7 +132,7 @@ const Auth = ({ history }) => {
               dbService
                 .collection("loggedID")
                 .doc(docRef.id)
-                .set({ id: docRef.id, loggedId: email });
+                .set({ id: docRef.id, loggedId: email, createAt: Date.now() });
             });
         }
       }
