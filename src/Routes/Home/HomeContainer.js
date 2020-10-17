@@ -16,10 +16,12 @@ const HomeContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
   const [xData, setXdata] = useState([]);
+  const [xserverSeed, setxServerSeed] = useState("");
+  const [xclientSeed, setxClientSeed] = useState("");
   const [serverSeed, setServerSeed] = useState(
-    "76974ca3243fea6f9c70ad33105c98b434f421b101f8544a4f44d44a012e0288_991a69ca52e8d3b97b05516fcb17816e3051caff35456f19a4a00b2b037d24a6"
+    "3bdff2c00c08aed9393d2d9ee23c22e94eaa0ba1b36321b458c8be75117cf9ad"
   );
-  const [clientSeed, setClientSeed] = useState("default average");
+  const [clientSeed, setClientSeed] = useState("victory cheers son");
   const [findedRDB, setFindedRDB] = useState([]);
   // const [soundEffect] = useState(new Audio(AudioUrl));
 
@@ -30,8 +32,6 @@ const HomeContainer = () => {
     event.preventDefault();
     event.returnValue = "";
     try {
-      //console.log("Document written with ID in Menu: ", dockId);
-      //console.log("authService.currentUser", authService.currentUser.email);
       authService
         .signOut()
         .then(await dbService.collection("loggedID").doc(`${dockId}`).delete());
@@ -77,9 +77,6 @@ const HomeContainer = () => {
     if (!searchTerm.includes(" ")) {
       searchTermCondition();
     }
-    // if (searchTerm !== "") {
-    //   searchByTerm(searchTerm);
-    // }
   };
 
   const updateTerm = (event) => {
@@ -89,11 +86,6 @@ const HomeContainer = () => {
     } = event;
     setSearchTerm(value);
   };
-  // const playSoundEffect = () => {
-  //   if (loading === false) {
-  //     soundEffect.play();
-  //   }
-  // };
 
   const findDBForSameTerm = async () => {
     const findedData = await dbService.collection("searchedData").get();
@@ -106,7 +98,7 @@ const HomeContainer = () => {
       setFindedRDB((prev) => [findedDataObject, ...prev]);
     });
 
-    console.log("findedData.length", findedData.Of.docChanges.length);
+    // console.log("findedData.length", findedData.Of.docChanges.length);
 
     if (findedData.Of.docChanges.length > 500) {
       findedData.forEach((document) => {
@@ -127,7 +119,12 @@ const HomeContainer = () => {
     const includeZero = arrayData.includes(0);
     const biggerThan = arrayData.filter((n) => n > 28);
 
-    const sameTerm = findedRDB.filter((x) => x.searchTerm === searchTerm);
+    const sameTerm = findedRDB.filter(
+      (x) =>
+        x.searchTerm === searchTerm &&
+        x.clientSeed === clientSeed &&
+        x.serverSeed === serverSeed
+    );
 
     if (
       arrayData.length > 6 ||
@@ -143,7 +140,6 @@ const HomeContainer = () => {
       setChance([0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]);
       setSum(10);
       setOverfifteen(0);
-      // setPercent([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     } else if (sameTerm.length > 0) {
       setError("본인의 ID 보안을 위해 마무리 하실때는 꼭 Sign Out !");
       setChance(sameTerm[0].chanceNumbers);
@@ -153,18 +149,21 @@ const HomeContainer = () => {
       if (loading === false) {
         setLoading(true);
       }
-      // setTimeout(() => {
-      //   playSoundEffect();
-      // }, 0);
       return;
-    } else if (JSON.stringify(xData) !== JSON.stringify(arrayData)) {
+    } else if (serverSeed.length !== 64) {
+      //129? 64?
+      setError("Server seed 입력이 잘못 되었습니다.");
+      return;
+    } else if (
+      JSON.stringify(xData) !== JSON.stringify(arrayData) ||
+      xclientSeed !== clientSeed ||
+      xserverSeed !== serverSeed
+    ) {
+      setxServerSeed(serverSeed);
+      setxClientSeed(clientSeed);
       setXdata(arrayData);
       numberGen();
-      // setSearchTerm("");
       setError("");
-      // setTimeout(() => {
-      //   playSoundEffect();
-      // }, 0);
     }
   };
 
@@ -199,33 +198,29 @@ const HomeContainer = () => {
     if (loading === false) {
       setLoading(true);
     }
-    // 유저 아이디 와 searchTerm 과 결과 데이터를 저장 ~
+
     await dbService
       .collection("searchedData")
       .add({
-        loggedId: "email",
-        createAt: Date.now(),
         chanceNumbers: chanceNumbers,
         sum: sum,
         overfifteen: overfifteen,
         cnn: cnn,
+        clientSeed: clientSeed,
+        serverSeed: serverSeed,
       })
       .then(function (docRef) {
-        // console.log("Document written with ID: ", docRef.id);
-        // dockId = docRef.id;
         dbService.collection("searchedData").doc(docRef.id).set({
           id: docRef.id,
-          loggedId: "email",
-          createAt: Date.now(),
           searchTerm: searchTerm,
           chanceNumbers: chanceNumbers,
           sum: sum,
           overfifteen: overfifteen,
           cnn: cnn,
+          clientSeed: clientSeed,
+          serverSeed: serverSeed,
         });
       });
-
-    // searchTerm 이 이미 같은 것이 있으면 저장하지 않음
   };
 
   if (loading === true) {
