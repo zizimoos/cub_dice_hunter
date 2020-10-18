@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { dbService } from "../fbase";
 import { withRouter } from "react-router-dom";
 
+const publicIp = require("public-ip");
+
 const Container = styled.div`
   width: 100vw;
   height: 85vh;
@@ -64,6 +66,7 @@ const Submit = styled.input`
 `;
 
 export let dockId = "";
+let userIp;
 
 const Auth = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -102,6 +105,7 @@ const Auth = ({ history }) => {
         //create Account
         await authService.createUserWithEmailAndPassword(email, password);
       } else {
+        userIp = await publicIp.v4();
         // log in
         await getLoggedIds();
         const check = loggedIds.filter((id) => id.loggedId === email);
@@ -132,7 +136,12 @@ const Auth = ({ history }) => {
               dbService
                 .collection("loggedID")
                 .doc(docRef.id)
-                .set({ id: docRef.id, loggedId: email, createAt: Date.now() });
+                .set({
+                  id: docRef.id,
+                  loggedId: email,
+                  ip: userIp,
+                  createAt: Date.now(),
+                });
             });
         }
       }
