@@ -8,13 +8,27 @@ import { dockId } from "../../Routes/Auth";
 // import AudioUrl from "../../assets/sound/barAlarm.mp3";
 
 const HomeContainer = () => {
-  const [chance, setChance] = useState([]);
-  const [percent, setPercent] = useState([]);
-  const [sum, setSum] = useState(0);
+  const [chance, setChance] = useState([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]);
+  const [percent, setPercent] = useState([
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+    8,
+  ]);
+  const [sum, setSum] = useState(24);
   const [overfifteen, setOverfifteen] = useState(0);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState("접속 되었습니다. 검색을 시작하세요.");
   const [xData, setXdata] = useState([]);
   const [xserverSeed, setxServerSeed] = useState("");
   const [xclientSeed, setxClientSeed] = useState("");
@@ -23,7 +37,6 @@ const HomeContainer = () => {
   );
   const [clientSeed, setClientSeed] = useState("victory cheers son");
   const [findedRDB, setFindedRDB] = useState([]);
-  // const [soundEffect] = useState(new Audio(AudioUrl));
 
   const SignOut = async () => {
     authService.signOut();
@@ -42,6 +55,12 @@ const HomeContainer = () => {
   };
 
   const onSubmit = (event) => {
+    event.preventDefault();
+    if (event.target.name === "clientSeed") {
+    }
+    if (event.target.name === "serverSeed") {
+    }
+
     window.addEventListener("beforeunload", listener);
   };
 
@@ -51,6 +70,7 @@ const HomeContainer = () => {
       target: { value },
     } = event;
     setClientSeed(value);
+
     window.addEventListener("beforeunload", listener);
   };
 
@@ -60,6 +80,7 @@ const HomeContainer = () => {
       target: { value },
     } = event;
     setServerSeed(value);
+
     window.addEventListener("beforeunload", listener);
   };
 
@@ -70,7 +91,7 @@ const HomeContainer = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (searchTerm.includes(" ")) {
-      setError("스페이스가 포함 되어있습니다. 검색버튼을 한번 더 누르세요");
+      setError("스페이스가 포함 되어있습니다. 검색버튼을 한번 더 누르세요 !");
       await setSearchTerm(searchTerm.trim());
       return;
     }
@@ -98,11 +119,8 @@ const HomeContainer = () => {
       setFindedRDB((prev) => [findedDataObject, ...prev]);
     });
 
-    // console.log("findedData.length", findedData.Of.docChanges.length);
-
     if (findedData.Of.docChanges.length > 500) {
       findedData.forEach((document) => {
-        // console.log(document.id);
         dbService.collection("searchedData").doc(document.id).delete();
       });
     }
@@ -113,10 +131,10 @@ const HomeContainer = () => {
     const arrayData = noneSearchTerm.split(",").map((d) => parseInt(d));
 
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    // console.log(arrayData);
+
     const conditionSum = arrayData.reduce(reducer);
     const notANumber = arrayData.includes(NaN);
-    const includeZero = arrayData.includes(0);
+
     const biggerThan = arrayData.filter((n) => n > 28);
 
     const sameTerm = findedRDB.filter(
@@ -128,10 +146,9 @@ const HomeContainer = () => {
 
     if (
       arrayData.length > 6 ||
-      arrayData.length < 5 ||
+      arrayData.length < 3 ||
       notANumber ||
       biggerThan.length !== 0 ||
-      includeZero ||
       conditionSum > 50 ||
       serverSeed === "" ||
       clientSeed === ""
@@ -141,7 +158,6 @@ const HomeContainer = () => {
       setSum(10);
       setOverfifteen(0);
     } else if (sameTerm.length > 0) {
-      setError("본인의 ID 보안을 위해 마무리 하실때는 꼭 Sign Out !");
       setChance(sameTerm[0].chanceNumbers);
       setSum(sameTerm[0].sum);
       setOverfifteen(sameTerm[0].overfifteen);
@@ -151,8 +167,7 @@ const HomeContainer = () => {
       }
       return;
     } else if (serverSeed.length !== 64) {
-      //129? 64?
-      setError("Server seed 입력이 잘못 되었습니다.");
+      setError("Server seed hash 를 입력하세요.");
       return;
     } else if (
       JSON.stringify(xData) !== JSON.stringify(arrayData) ||
@@ -161,9 +176,9 @@ const HomeContainer = () => {
     ) {
       setxServerSeed(serverSeed);
       setxClientSeed(clientSeed);
+
       setXdata(arrayData);
       numberGen();
-      setError("");
     }
   };
 
@@ -172,25 +187,26 @@ const HomeContainer = () => {
 
   const numberGen = async () => {
     for (let i = 0; i < 12; i++) {
-      if (i < 7) {
+      if (i < 4) {
         chanceNumber =
           Math.floor(Math.random() * (Math.random() * 10000)) + 132;
+        chanceNumbers.push(chanceNumber);
+      } else if (i > 3 && i < 7) {
+        chanceNumber = Math.floor(Math.random() * (Math.random() * 8000)) + 132;
         chanceNumbers.push(chanceNumber);
       } else if (i > 6 && i < 9) {
         chanceNumber = Math.floor(Math.random() * (Math.random() * 6000)) + 332;
         chanceNumbers.push(chanceNumber);
       } else if (i > 8) {
-        chanceNumber = Math.floor(Math.random() * (Math.random() * 1000)) + 132;
+        chanceNumber = Math.floor(Math.random() * (Math.random() * 5000)) + 132;
         chanceNumbers.push(chanceNumber);
       }
     }
 
-    const overfifteen = Math.floor(Math.random() * 100) + 9;
+    const overfifteen = Math.floor(Math.random() * 4000) + 800;
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     const sum = chanceNumbers.reduce(reducer) + overfifteen;
-    const cnn = chanceNumbers.map((cn) =>
-      parseFloat(((cn / sum) * 100).toPrecision(4))
-    );
+    const cnn = chanceNumbers.map((cn) => parseInt((cn / sum) * 100));
     setChance(chanceNumbers);
     setSum(sum);
     setOverfifteen(overfifteen);

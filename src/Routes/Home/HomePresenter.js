@@ -5,6 +5,12 @@ import BarChart from "../../Components/BarChart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchDollar } from "@fortawesome/free-solid-svg-icons";
 
+import { authService } from "../../fbase";
+import { dbService } from "../../fbase";
+import { dockId } from "../../Routes/Auth";
+
+import ModalApp from "../../Components/Modal";
+
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -29,7 +35,6 @@ const Input = styled.input`
   font-size: 16px;
   border-radius: 3px;
   background-color: white;
-  /* background-color: #4a5d70; */
   ::placeholder {
     color: rgba(255, 255, 255, 0.2);
   }
@@ -65,29 +70,107 @@ const SInput = styled.input`
   font-size: 14px;
   text-align: center;
   background-color: #4a5d70;
+  background-color: white;
   ::placeholder {
-    /* background-color: rgba(255, 255, 255, 0.2); */
-    /* color: rgba(255, 255, 255, 0.2); */
     padding-left: 8px;
   }
-  /* border: 2px solid red; */
   border-radius: 2px;
   margin-right: 5px;
   margin-left: 5px;
-  /* margin-bottom: 5px; */
 `;
-// const SSubmit = styled.input`
-//   all: unset;
-//   width: 50px;
-//   height: 16px;
-//   padding: 5px;
-//   font-size: 14px;
-//   text-align: center;
-//   color: "#4a5d70";
-//   background-color: #c05c67;
-//   border-radius: 2px;
-//   cursor: pointer;
-// `;
+
+const listner = async (event) => {
+  event.preventDefault();
+  event.returnValue = "";
+  await dbService.collection("loggedID").doc(`${dockId}`).delete();
+  authService.signOut();
+};
+const enablePrevent = () => window.addEventListener("beforeunload", listner);
+
+const recomend = (percent) => {
+  let recomendArray = [];
+  recomendArray.push(percent[0]);
+  recomendArray.push(percent[0] + percent[1]);
+  recomendArray.push(percent[0] + percent[1] + percent[2]);
+  recomendArray.push(percent[0] + percent[1] + percent[2] + percent[3]);
+  recomendArray.push(
+    percent[0] + percent[1] + percent[2] + percent[3] + percent[4]
+  );
+  recomendArray.push(
+    percent[0] + percent[1] + percent[2] + percent[3] + percent[4] + percent[5]
+  );
+  recomendArray.push(
+    percent[0] +
+      percent[1] +
+      percent[2] +
+      percent[3] +
+      percent[4] +
+      percent[5] +
+      percent[6]
+  );
+  recomendArray.push(
+    percent[0] +
+      percent[1] +
+      percent[2] +
+      percent[3] +
+      percent[4] +
+      percent[5] +
+      percent[6] +
+      percent[7]
+  );
+  recomendArray.push(
+    percent[0] +
+      percent[1] +
+      percent[2] +
+      percent[3] +
+      percent[4] +
+      percent[5] +
+      percent[6] +
+      percent[7] +
+      percent[8]
+  );
+  recomendArray.push(
+    percent[0] +
+      percent[1] +
+      percent[2] +
+      percent[3] +
+      percent[4] +
+      percent[5] +
+      percent[6] +
+      percent[7] +
+      percent[8] +
+      percent[9]
+  );
+  recomendArray.push(
+    percent[0] +
+      percent[1] +
+      percent[2] +
+      percent[3] +
+      percent[4] +
+      percent[5] +
+      percent[6] +
+      percent[7] +
+      percent[8] +
+      percent[9] +
+      percent[10]
+  );
+  recomendArray.push(
+    percent[0] +
+      percent[1] +
+      percent[2] +
+      percent[3] +
+      percent[4] +
+      percent[5] +
+      percent[6] +
+      percent[7] +
+      percent[8] +
+      percent[9] +
+      percent[10] +
+      percent[11]
+  );
+
+  return recomendArray;
+};
 
 const HomePresenter = ({
   chance,
@@ -105,8 +188,9 @@ const HomePresenter = ({
   serverSeed,
   clientSeed,
   findDBForSameTerm,
-  // playSoundEffect,
 }) => {
+  enablePrevent();
+  const recommendArray = recomend(percent);
   return (
     <Container>
       <>
@@ -127,11 +211,11 @@ const HomePresenter = ({
         <AuthForm onSubmit={onSubmit}>
           <span
             style={{
-              color: "#4a5d70",
+              color: "whitesmoke",
             }}
           >
             {" "}
-            C :{" "}
+            ClientSeed :{" "}
           </span>
           <SInput
             name="clientSeed"
@@ -143,11 +227,11 @@ const HomePresenter = ({
           ></SInput>
           <span
             style={{
-              color: "#4a5d70",
+              color: "whitesmoke",
             }}
           >
             {" "}
-            S :{" "}
+            Server seed :{" "}
           </span>
           <SInput
             name="serverSeed"
@@ -157,7 +241,7 @@ const HomePresenter = ({
             value={serverSeed}
             onChange={onChangeServer}
           ></SInput>
-          {/* <SSubmit type="submit" value="Save"></SSubmit> */}
+          <ModalApp></ModalApp>
         </AuthForm>
       </>
       {loading ? (
@@ -176,6 +260,7 @@ const HomePresenter = ({
           </ErrorMessage>
           <BarChart
             chance={chance}
+            recommendArray={recommendArray}
             sum={sum}
             overfifteen={overfifteen}
             findDBForSameTerm={findDBForSameTerm}

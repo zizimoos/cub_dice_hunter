@@ -102,19 +102,13 @@ const Auth = ({ history }) => {
     event.preventDefault();
     try {
       if (newAccount) {
-        //create Account
         await authService.createUserWithEmailAndPassword(email, password);
       } else {
         userIp = await publicIp.v4();
-        // log in
+
         await getLoggedIds();
         const check = loggedIds.filter((id) => id.loggedId === email);
-        // if (check.length !== 0) {
-        //   console.log("이미 다른 곳에서 접속중입니다.");
-        //   setError("이미 다른 곳에서 접속중입니다.");
-        //   setLogin({ loggIn: false });
-        //   setTimeout(() => history.push("/production"), 2000);
-        // } else
+
         if (check.length === 0 || check.length !== 0) {
           await authService.signInWithEmailAndPassword(email, password);
           setError("로그인 중입니다.");
@@ -129,19 +123,14 @@ const Auth = ({ history }) => {
               createAt: Date.now(),
             })
             .then(function (docRef) {
-              // console.log("Document written with ID: ", docRef.id);
               dockId = docRef.id;
-              // dockId를 localstorage에 저장해놨다가, signOut 할때 사용할 수 있도록 할 것
-              // 관리자 화면 만들때를 위해서 디비 리스트 저장해 놓을 필요 있음.
-              dbService
-                .collection("loggedID")
-                .doc(docRef.id)
-                .set({
-                  id: docRef.id,
-                  loggedId: email,
-                  ip: userIp,
-                  createAt: Date.now(),
-                });
+
+              dbService.collection("loggedID").doc(docRef.id).set({
+                id: docRef.id,
+                loggedId: email,
+                ip: userIp,
+                createAt: Date.now(),
+              });
             });
         }
       }
@@ -182,7 +171,7 @@ const Auth = ({ history }) => {
             value={newAccount ? "Create Account" : "Log In"}
           ></Submit>
         </AuthForm>
-        <p style={{ color: "white" }}>{error ? `Error : ${error}` : null}</p>
+        <p style={{ color: "white" }}>{error ? `Message : ${error}` : null}</p>
       </AuthFormBox>
     </Container>
   );

@@ -1,9 +1,12 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-// import { authService } from "../fbase";
-// import { dbService } from "../fbase";
-// import { dockId } from "../Routes/Auth";
+import { authService } from "../fbase";
+import { dbService } from "../fbase";
+import { dockId } from "../Routes/Auth";
+
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSkullCrossbones } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   position: absolute;
@@ -66,26 +69,35 @@ const OverTwelve = styled.span`
   color: whitesmoke;
   font-size: 16px;
 `;
-const BarChart = ({ chance, sum, overfifteen, loading }) => {
-  // const SignOut = async () => {
-  //   authService.signOut();
-  // };
-  // //beforeunload event를 사용해서
-  // const listener = async (event) => {
-  //   event.preventDefault();
-  //   event.returnValue = "";
-  //   try {
-  //     //console.log("Document written with ID in Menu: ", dockId);
-  //     //console.log("authService.currentUser", authService.currentUser.email);
-  //     authService
-  //       .signOut()
-  //       .then(await dbService.collection("loggedID").doc(`${dockId}`).delete());
-  //   } catch {
-  //   } finally {
-  //     SignOut();
-  //   }
-  // };
-  // window.addEventListener("beforeunload", listener);
+
+const RecommandAnimation = (y) => keyframes`
+0% {
+    opacity:1
+  }
+  50% {
+    opacity:0
+  }
+  100% {
+    opacity:1
+  }
+`;
+
+const Recommend = styled.div`
+  margin-top: 7px;
+  color: #ec644b;
+  color: whitesmoke;
+  animation: ${RecommandAnimation} 1s 2s ease-in-out infinite;
+`;
+
+const BarChart = ({ chance, sum, overfifteen, recommendArray, loading }) => {
+  const listner = async (event) => {
+    event.preventDefault();
+    event.returnValue = "";
+    await dbService.collection("loggedID").doc(`${dockId}`).delete();
+    authService.signOut();
+  };
+  const enablePrevent = () => window.addEventListener("beforeunload", listner);
+  enablePrevent();
 
   return (
     <Container>
@@ -110,6 +122,7 @@ const BarChart = ({ chance, sum, overfifteen, loading }) => {
                   {index}
                 </span>
                 <BarUnit cnsum={cn / sum}></BarUnit>
+
                 <span
                   key={`spanthree` + index}
                   style={{
@@ -118,12 +131,17 @@ const BarChart = ({ chance, sum, overfifteen, loading }) => {
                     marginRight: "20px",
                     textAlign: "start",
                     paddingTop: "6px",
-                    color: "#ec644b",
+                    color: "dodgerblue",
                   }}
                 >
                   {" "}
                   {((cn / sum) * 100).toPrecision(2)} %
                 </span>
+                <Recommend>
+                  {+recommendArray[index] < 60
+                    ? ""
+                    : ` 💀 ▶︎  RISK  ${+recommendArray[index]} %  ◀︎  💀 `}
+                </Recommend>
               </div>
               <div
                 key={`divtwo` + index}

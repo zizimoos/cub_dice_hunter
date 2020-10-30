@@ -41,8 +41,6 @@ const Slink = styled(Link)`
 const RightNav = ({ location: { pathname }, open, userObj }) => {
   const preSignOut = async () => {
     try {
-      //console.log("Document written with ID in Menu: ", dockId);
-      //console.log("authService.currentUser", authService.currentUser.email);
       await dbService.collection("loggedID").doc(`${dockId}`).delete();
     } catch {
     } finally {
@@ -53,22 +51,6 @@ const RightNav = ({ location: { pathname }, open, userObj }) => {
   const SignOut = async () => {
     authService.signOut();
   };
-  //beforeunload event를 사용해서
-  // const listener = async (event) => {
-  //   event.preventDefault();
-  //   event.returnValue = "";
-  //   try {
-  //     //console.log("Document written with ID in Menu: ", dockId);
-  //     //console.log("authService.currentUser", authService.currentUser.email);
-  //     authService
-  //       .signOut()
-  //       .then(await dbService.collection("loggedID").doc(`${dockId}`).delete());
-  //   } catch {
-  //   } finally {
-  //     SignOut();
-  //   }
-  // };
-  // window.addEventListener("beforeunload", listener);
 
   return (
     <List open={open}>
@@ -78,14 +60,12 @@ const RightNav = ({ location: { pathname }, open, userObj }) => {
             <Slink to="/">Search</Slink>
           </Item>
           <Item current={pathname === "/product"}>
-            <Slink to="/product">Product</Slink>
+            <Slink to="/product">Busta 소개</Slink>
           </Item>
-          {/* <Item current={pathname === "/company"}>
-          <Slink to="/company">Company</Slink>
-        </Item>
-        <Item current={pathname === "/detail"}>
-          <Slink to="/detail">Detail</Slink>
-        </Item> */}
+          <Item current={pathname === "/company"}>
+            <Slink to="/company">Busta 설명서</Slink>
+          </Item>
+
           <Item
             onClick={preSignOut}
             current={!authService.currentUser}
@@ -99,7 +79,7 @@ const RightNav = ({ location: { pathname }, open, userObj }) => {
       ) : (
         <>
           <Item current={pathname === "/product"}>
-            <Slink to="/product">Product</Slink>
+            <Slink to="/product">Busta 소개</Slink>
           </Item>
           <Item
             onClick={preSignOut}
